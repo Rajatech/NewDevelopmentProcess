@@ -21,7 +21,7 @@ person.firstName = "John";
 person.lastName = "Doe";
 person.age = 50;
 person.eyeColor = "blue";
-
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 3. Using an Object Constructor:
 
 function person(first, last, age, eye) {
