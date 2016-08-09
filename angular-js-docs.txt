@@ -1,0 +1,95 @@
+Javascript object creation --> constructor
+Controller
+Service
+Factory
+
+Javascript Object Creation :
+=======================================
+1. Using an Object Literal :
+
+var person = {
+    firstName:"John",
+    lastName:"Doe",
+    age:50,
+    eyeColor:"blue"
+};
+
+2. Using javascript keyword:
+
+var person = new Object();
+person.firstName = "John";
+person.lastName = "Doe";
+person.age = 50;
+person.eyeColor = "blue";
+
+3. Using an Object Constructor:
+
+function person(first, last, age, eye) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.eyeColor = eye;
+}
+var myFather = new person("John", "Doe", 50, "blue");
+var myMother = new person("Sally", "Rally", 48, "green");
+
+Function prototype -
+this keyword -  
+
+Angular JS Services:
+=======================================
+
+In real life, you should use them to encapsulate the repeatable logic and share data among different components of your app. For example, you might need to perform REST interactions at various places in your app. To do this, you can build a service that internally uses $http to communicate with the server and inject this into controllers. Also, if you have data that may be needed in multiple locations you can encapsulate it in the service and use it wherever required.
+
+Here are the most important points to remember about services:
+
+A service is registered using the service() function of angular.module().
+
+The second argument to service() is a constructor function. When we ask for the service as a dependency, AngularJS creates an object from this constructor function and injects it.
+
+A service is a singleton. AngularJS instantiates the service object only once and all other components share the same instance.
+
+Services are lazily instantiated. This means AngularJS instantiates the service only when it encounters a component that declares dependency on the service.
+
+
+angular.module('myApp').service('helloService',function(){
+  this.sayHello=function(){ // define an instance method
+    alert('Hello!! Welcome to services.');
+  }
+});
+
+angular.module('myApp').controller('TestController',
+function(helloService){
+  helloService.sayHello();
+});
+
+angular.module('app').factory('messages', function(){
+  var messages = {};
+
+  messages.list = [];
+
+  messages.add = function(message){
+    messages.list.push({id: messages.list.length, text: message});
+  };
+
+  return messages;
+});
+
+angular.module('app').controller('PostCtrl', function (messages){
+  var self = this;
+
+  self.addMessage = function(message){
+    messages.add(message);
+  };
+});
+
+
+angular.module('app').controller('ListCtrl', function (messages){
+  var self = this;
+
+  self.messages = messages.list;
+});
+
+** Refactor needs to be done in my contactListApp creating a new service for REST service call
+and separating ListGet and ListPost controller..
+
