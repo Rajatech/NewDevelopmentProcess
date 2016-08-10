@@ -1,0 +1,50 @@
+<div id="content" ng-controller="clientCtrl" ng-init="initSystemConfirmation()">
+<div class="entryHeader">
+ <h3> {{headerName}} </h3>
+</div>
+<div class="entryBlkArea">
+<div class="formItemBlock">
+	<div class="formItem">
+		<label> Client Name </label>
+		<span> {{form.name}}  </span>
+	</div>
+
+	<div class="formItem">
+		<label> Client Id </label>
+		<span> {{form.clientId}}  </span>
+	</div>
+
+	<div class="formItem">
+		<label> UID Type </label>
+		<span> {{form.uidType}}  </span>
+	</div>
+
+	<div class="formItem">
+		<label> UID Number </label>
+		<span> {{form.uidNumber}}  </span>
+	</div>
+
+	<div class="formItem">
+		<label> Date Of Birth </label>
+		<span> {{form.dt}}  </span>
+	</div>
+
+	<div class="formItem">
+		<label> IP Address </label>
+		<span> {{form.ipAddress}} </span>
+	</div>
+
+	<div class="formItem">
+		<label> MAC Address </label>
+		<span>{{form.macAddress}}</span>
+	</div>
+
+</div>
+</div>
+<div class="entryFooter">
+<my-ok-btn btn-link="/okHandler"  btn-name="OK"> </my-confirm-btn>
+</div>
+</div>
+
+
+

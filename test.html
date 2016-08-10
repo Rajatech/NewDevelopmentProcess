@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" >
+   <head>
+   </head>
+   <body> 
+         <script type="text/javascript">
+            
+         //{value: 1, next: {value: 2, next: {value: 3, next: null}}}
+
+         function listToArray(list) {
+               var arr = [];
+               for (var key in list) {
+                     //alert(key);
+                     var obj = list[key];
+                     if(key == 'value'){
+                        //alert(obj);
+                        arr.push(obj);
+                     }else{
+                        list = obj;
+                        listToArray(obj);
+                     }
+               }
+               return arr;
+         }
+
+         function makeArray(){
+            listToArray({value: 1, next: {value: 2, next: null}})
+         }
+
+         alert(listToArray({value: 1, next: {value: 2, next: null}}));
+
+
+
+
+
+
+
+
+
+
+
+
+
+            function getElem(iterable, index){
+                  if(typeof iterable === 'string'){
+                      return iterable.charAt(index);
+                  }else{
+                      return iterable[index];
+                  }
+            }
+            var uniqueInOrder=function(iterable){
+                  var storeChar = [];
+                  for(var i=0; i<iterable.length; i++){
+                        var chr = getElem(iterable,i);
+                        var nextChr = getElem(iterable,i+1);
+                        if(typeof nextChr == undefined){
+                           storeChar.push(chr);
+                        }else if(chr != nextChr){
+                           storeChar.push(chr); 
+                        }
+                  }
+                  return storeChar;
+            }
+
+            //alert(uniqueInOrder('12334566'));
+
+
+
+
+         </script>
+   </body>
+</html>

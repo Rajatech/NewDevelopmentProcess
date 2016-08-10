@@ -1,0 +1,119 @@
+<div id="content">
+<div class="panel panel-default">
+
+	<div class="panel-heading cb-panel-heading">{{charge.headerName}}</div>
+	<div class="panel-body">
+		<div class="row margintop10">
+
+			 <div growl inline="true" reference="1"></div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 cb-">
+				 <div class="row" ng-show="charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Id </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeId" ng-model="charge.form.chargeId"/>
+				 		</div>
+				 </div>
+				 <div class="row" ng-show="!charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Id </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<label>{{charge.form.chargeId}}</label>
+				 		</div>
+				 </div>
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row" ng-show="charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Client Name </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeName" ng-model="charge.form.chargeName"/>
+				 		</div>
+				 </div>
+				 <div class="row" ng-show="!charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Client Name </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<label> {{charge.form.chargeName}}</label>
+				 		</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row" ng-show="charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Currency </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeCcy" ng-model="charge.form.chargeCcy"/>
+				 		</div>
+				 </div>
+				 <div class="row" ng-show="!charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Currency </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<label> {{charge.form.chargeCcy}}</label>
+				 		</div>
+				 </div>
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row" ng-show="charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Time Basic </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<select name="chargeTimeBasic" id="chargeTimeBasic" ng-model="charge.form.chargeTimeBasis">
+      							<option ng-repeat="option in charge.chargeTimeBasisValues" value="{{option.id}}">{{option.name}}</option>
+    						</select>
+				 		</div>
+				 </div>
+				 <div class="row" ng-show="!charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Time Basic </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<label> {{charge.form.chargeTimeBasis}}</label>
+				 		</div>
+				 </div>
+			 </div>
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row" ng-show="charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Amount  </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeAmt" ng-model="charge.form.chargeAmt"/>
+				 		</div>
+				 </div>
+				 <div class="row" ng-show="!charge.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Charge Amount  </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<label>{{charge.form.chargeAmt}}</label>
+				 		</div>
+				 </div>
+			 </div>
+
+		</div>		
+		<div class="row margintop25 spacerright35">
+			<div class="col-md-12">
+				<button class="btn btn-success" ng-show="charge.EditMode" ng-click="charge.submitEntry()"> SUBMIT </button>
+				<button class="btn btn-success" ng-show="charge.ConfirmMode" ng-click="charge.confirmEntry()"> CONFIRM </button>
+				<button class="btn btn-success" ng-show="charge.ConfirmMode" ng-click="charge.back()"> BACK </button>
+				<button class="btn btn-success" ng-show="charge.OkMode" ng-click="charge.ok()"> OK </button>
+			</div>
+		</div>
+		
+	</div>
+</div>
+</div>

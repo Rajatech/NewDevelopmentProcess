@@ -1,0 +1,39 @@
+<div class="col-xs-12">
+    <div class="navbar navbar-inverse bg-primary cb-nav-header" role="navigation">
+
+        <div class="navbar-header">
+            <a ui-sref="home.dashboard" class="navbar-brand">Next Generation</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-menubuilder">
+
+            <ul class="nav navbar-nav" style="float:left;font:Lato,sans-serif;color:#fff">
+
+                <li class="dropdown" dropdown href="#">
+                    <a class="dropdown-toggle" data-toggle="dropdown" dropdown-toggle>Client Management
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-backcolor">
+                        <li><a ui-sref="home.clientEntry({back:false})">Client Entry</a></li>
+                        <li><a ui-sref="home.clientQuery">Client Query</a></li>
+                        <li><a ui-sref="home.clientCancel">Client Cancel</a></li>
+                        <li class="divider"></li>
+                        <li><a ui-sref="home.chargeEntry">Charge Entry</a></li>
+                    </ul>
+                </li>
+                <li navbar-right><a ng-click="menu.expireSession()"><i class="glyphicon glyphicon-off"></i> Logout </a></li>
+            </ul>
+        </div>
+    </div>
+ </div>
+
+
+<div class="col-xs-12">
+    <div ui-view="menuContent"> </div>
+</div>

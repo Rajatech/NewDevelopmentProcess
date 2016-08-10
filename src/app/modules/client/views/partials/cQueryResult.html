@@ -1,0 +1,42 @@
+<!doctype html>
+<div id="content" ng-controller="clientCtrl" ng-init="initQueryResult()">
+
+<div class="entryHeader">
+ <h3> Client Query </h3>
+</div>
+
+<div class="detailBlkArea">
+
+
+<div id="grid1" ui-grid="dataGridOptions" ui-grid-exporter class="grid"></div>
+
+<div class="detailFooter">
+<button type="button" class="btn btn-danger" ng-click="backToQuery()">Back</button>
+</div>
+
+
+
+	<!-- <table class="table table-bordered">
+		<thead>
+			<tr>
+				<td> Client Id </td>
+				<td> Client Name </td>
+				<td> Client IP Address </td>
+				<td> Client MAC Address </td>
+			</tr>
+		</thead>
+		<tbody>
+		  <tr ng-repeat="client in clients">
+			<td> {{client.clientId}} </td>
+			<td> {{client.name}}</td>
+			<td> {{client.ipAddress}}</td>
+			<td> {{client.macAddress}}</td>
+		  </tr>
+		</tbody>
+	</table> -->
+
+
+
+</div>
+
+</div>

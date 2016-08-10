@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" >
+   <head>
+      
+      <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css">
+      <link rel="stylesheet" type="text/css" href="lib/angular-growl-v2/build/angular-growl.css">
+      <link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.css">
+      <link rel="stylesheet" type="text/css" href="modules/client/styles/commonStyles.css">
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap-1.js"></script>
+      <script type="text/javascript" src="lib/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+      <script type="text/javascript" src="lib/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+      <link rel="stylesheet" type="text/css" href="lib/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
+      <script type="text/javascript" src="lib/angular/angular.js"></script>
+      <script type="text/javascript" src="lib/angular-animate/angular-animate.js"></script>
+      <script type="text/javascript" src="lib/angular-touch/angular-touch.js"></script>
+      <script type="text/javascript" src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+      <script type="text/javascript" src="lib/angular-ui-grid/ui-grid.js"> </script>
+      <script type="text/javascript" src="lib/angular-growl-v2/build/angular-growl.js"> </script>
+      <script type="text/javascript" src="lib/chart.js/dist/Chart.js"> </script>
+      <script type="text/javascript" src="lib/angular-chart.js/dist/angular-chart.js"> </script>
+      <script type="text/javascript" src="app.module.js"></script>
+      <script type="text/javascript" src="common/global/configs/app.route.js"></script>
+      
+
+      <script type="text/javascript" src="common/global/services/DbActionHandler.js"></script>
+      <script type="text/javascript" src="common/global/services/DatepickerConfig.js"></script>
+      <script type="text/javascript" src="modules/charge/scripts/services/dropdownConfig.js"></script>
+
+      <script type="text/javascript" src="lib/billingApp/all.services.min.js"></script>
+      <script type="text/javascript" src="lib/billingApp/all.validator.min.js"></script>
+      <script type="text/javascript" src="common/global/controller/BaseController.js"></script>
+      <script type="text/javascript" src="lib/billingApp/all.controllers.min.js"></script>
+      
+      
+      <!-- <script type="text/javascript" src="modules/menu/controllers/menuCtrl.js"></script> -->
+      <!-- <script type="text/javascript" src="modules/client/scripts/controllers/clientEntryController.js"></script>
+      <script type="text/javascript" src="modules/client/scripts/controllers/clientQueryController.js"></script> -->
+      <!-- <script type="text/javascript" src="modules/client/scripts/controllers/dist//clientController.min.js.map"></script> -->
+      <!-- <script type="text/javascript" src="modules/charge/scripts/controllers/chargeEntryController.js"></script> -->
+      <!-- <script type="text/javascript" src="modules/login/scripts/controllers/LogInController.js"></script> -->
+      <!--  <script type="text/javascript" src="modules/dashboard/scripts/controllers/DashboardController.js"></script> -->
+
+      <!-- <script type="text/javascript" src="modules/client/scripts/services/clientValidator.js"></script>
+      <script type="text/javascript" src="modules/charge/scripts/services/chargeValidator.js"></script> -->
+
+      <!-- <script type="text/javascript" src="modules/login/scripts/services/UserService.js"></script>
+      <script type="text/javascript" src="modules/login/scripts/services/LoginService.js"></script>
+      <script type="text/javascript" src="modules/client/scripts/services/clientFactory.js"></script>
+      <script type="text/javascript" src="modules/client/scripts/services/PaginationService.js"></script> -->
+
+      
+      
+
+
+   </head>
+   <body ng-app="billingApp"> 
+   
+   <div class="container">
+
+         <div class="row">
+            <div ui-view="menu"> </div>
+         </div>
+
+         <div class="row">
+            <div class="col-xs-12">
+               <div ui-view="login"> </div>
+            </div>
+         </div>
+
+
+   </div>
+      
+      
+
+   </body>
+</html>

@@ -1,0 +1,18 @@
+<div class="loginBox">
+	<form class="form-signin">
+		<h2 class="login-label"> Next Generation </h2>
+		<div>
+			<!-- <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span> -->
+			<input type="text" name="username" placeholder="User Name" ng-model="login.userName" class="form-input">
+		</div>
+
+		<div>
+			<input type="password" name="password" placeholder="Password" ng-model="login.userPassword" class="form-input">
+		</div>
+
+		<div class="login-btn">
+			<input type="submit" name="LogIn" ng-click="login.loginHandler()" class="btn btn-lg btn-primary btn-block">
+		</div>
+
+	</form>
+</div>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+	<head>
+		<script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="lib/angular/angular.js"></script>
+		<script type="text/javascript" src="lib/angular-route/angular-route.js"></script>
+		<script type="text/javascript" src="lib/angular-ui-grid/ui-grid.js"></script>
+		<script type="text/javascript" src="scripts/controllers/appRouter.js"></script>
+		<script type="text/javascript" src="scripts/services/contactListRestService.js"></script>
+		<script type="text/javascript" src="scripts/controllers/contactAddCtrl.js"></script>
+		<script type="text/javascript" src="scripts/controllers/contactDisplayCtrl.js"></script>
+		<script type="text/javascript" src="lib/angular-touch/angular-touch.js"></script>
+    	<script type="text/javascript" src="lib/angular-animate/angular-animate.js"></script>
+		<link rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.css">
+		<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="styles/commonStyles.css">
+		<base href="/"></base>
+	</head>
+	
+	<body ng-app="contacListApp">
+		<div class="container bodyContainer" ng-controller="contactListCtrl">
+			<h2> Contack List App </h2>
+			
+			<hr class="hrLine">
+				
+				<table cellspacing="20">
+					<thead>
+						<tr>
+							<th> Name </th>
+							<th> Email</th>
+							<th> Contact No</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td> <input type="text" ng-model="name"> </td>
+							<td> <input type="text" ng-model="email"> </td>
+							<td> <input type="text" ng-model="contactNo"> </td>
+							<td> <input type="button" name="add" value="ADD" ng-click="addData()"> </td>
+						</tr>					
+					</tbody>
+				</table>
+				<br/>
+				<hr class="hrLine">
+				
+				<div ng-controller="contactDisplayCtrl">
+					<div class="myGrid"  ui-grid-selection ui-grid="gridOptions">
+					<br/> <br/>
+					<button type="button" class="btn btn-success"  ng-click="deleteAll()">Delete Selected</button>
+				</div>
+
+				
+		</div>
+
+	</body>
+
+</html>

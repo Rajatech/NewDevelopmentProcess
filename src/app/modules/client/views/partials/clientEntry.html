@@ -1,0 +1,167 @@
+<div id="content">
+<div class="panel panel-default">
+
+	<div class="panel-heading cb-panel-heading">{{client.headerName}}</div>
+	<div class="panel-body">
+		<div class="row margintop10">
+
+			 <div growl inline="true" reference="1"></div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 cb-">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Client Name </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input ng-show="client.EditMode" type="text" id="name" ng-model="client.form.name"/>
+				 			<span  ng-show="!client.EditMode" ng-bind="client.form.name"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row">
+				 		<div class="col-md-5">
+				 			<label> Client Id </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input ng-show="client.EditMode" type="text" id="clientId" ng-model="client.form.clientId"/>
+				 			<span  ng-show="!client.EditMode" ng-bind="client.form.clientId"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row">
+				 		<div class="col-md-5">
+				 			<label> Client Type </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<select ng-show="client.EditMode" name="uidType" id="uidType" ng-model="client.form.clientType">
+      							<option ng-repeat="option in client.clientTypes" value="{{option.id}}">{{option.name}}</option>
+    						</select>
+    						<span  ng-show="!client.EditMode" ng-bind="client.form.clientType"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row">
+				 		<div class="col-md-5">
+				 			<label> UID Types</label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<select ng-show="client.EditMode" name="uidType" id="uidType" ng-model="client.form.uidType">
+      							<option ng-repeat="option in client.uidTypes" value="{{option.id}}">{{option.name}}</option>
+    						</select>
+    						<span  ng-show="!client.EditMode" ng-bind="client.form.uidType"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row">
+				 		<div class="col-md-5">
+				 			<label> UID Number </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input ng-show="client.EditMode" type="text" id="uidNumber" ng-model="client.form.uidNumber"/>
+				 			<span  ng-show="!client.EditMode" ng-bind="client.form.uidNumber"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Date Of Birth </label>
+				 		</div>
+				 		<div class="col-md-7">
+					          <input ng-show="client.EditMode" type="text" uib-datepicker-popup="{{client.format}}" ng-model="client.form.dt" is-open="client.DobPopup.opened" datepicker-options="client.dateOptions" ng-required="true" show-button-bar="false" ng-click="client.openDobPopup()" />
+					          <span  ng-show="!client.EditMode"> {{client.form.dt | date:"MM/dd/yyyy"}}</span>
+	        			</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Age </label>
+				 		</div>
+				 		<div class="col-md-7">
+					          <input ng-show="client.EditMode" type="text" id="clientAge" ng-model="client.form.clientAge"/>
+				 			  <span  ng-show="!client.EditMode" ng-bind="client.form.clientAge"></span>
+	        			</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row">
+				 		<div class="col-md-5">
+				 			<label> Password </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input ng-show="client.EditMode" type="text" id="password" ng-model="client.form.password"/>
+				 			<span  ng-show="!client.EditMode" ng-bind="client.form.password"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row">
+				 		<div class="col-md-5">
+				 			<label> Confirm Password </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input ng-show="client.EditMode" type="text" id="confirmPassword" ng-model="client.form.confirmPassword"/>
+				 			<span  ng-show="!client.EditMode" ng-bind="client.form.confirmPassword"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> IP Address </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input ng-show="client.EditMode" type="text" id="ipAddress" ng-model="client.form.ipAddress"/>
+				 			<span  ng-show="!client.EditMode" ng-bind="client.form.ipAddress"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 	<div class="row">
+				 		<div class="col-md-5">
+				 			<label> MAC Address </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input ng-show="client.EditMode" type="text" id="macAddress" ng-model="client.form.macAddress"/>
+				 			<span  ng-show="!client.EditMode" ng-bind="client.form.macAddress"></span>
+				 		</div>
+				 </div>
+
+			 </div>
+
+		</div>		
+		<div class="row margintop25 spacerright35">
+			<div class="col-md-12">
+				<button class="btn btn-success" ng-show="client.EditMode" ng-click="client.submitEntry()"> SUBMIT </button>
+				<button class="btn btn-success" ng-show="client.ConfirmMode" ng-click="client.confirmEntry()"> CONFIRM </button>
+				<button class="btn btn-success" ng-show="client.ConfirmMode" ng-click="client.back()"> BACK </button>
+				<button class="btn btn-success" ng-show="client.OkMode" ng-click="client.ok()"> OK </button>
+			</div>
+		</div>
+		
+	</div>
+</div>
+</div>

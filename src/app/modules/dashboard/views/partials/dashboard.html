@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-sm-12 col-lg-12 col-sm-12">
+    	<h1> Dashboard </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 col-sm-4 col-xs-6 tile-stats-count">
+      <span class="count_top"><i class="fa fa-user"></i> Total Clients</span>
+      <div class="count">{{dashboard.clientsCount}}</div>
+      <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile-stats-count">
+      <span class="count_top"><i class="fa fa-user"></i> Total Charge Entry</span>
+      <div class="count">{{dashboard.chargesCount}}</div>
+      <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile-stats-count">
+      <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
+      <div class="count">2500</div>
+      <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile-stats-count">
+      <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
+      <div class="count">2500</div>
+      <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile-stats-count">
+      <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
+      <div class="count">2500</div>
+      <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-3 col-lg-3 col-sm-3">
+        <div class="panel panel-title">
+          <div class="panel-heading"> 
+            Chart Example
+          </div>
+          <div class="panel-body">
+            <canvas id="pie" class="chart chart-pie"
+                chart-data="dashboard.data" chart-labels="dashboard.labels" chart-options="dashboard.options">
+            </canvas> 
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-7 col-lg-7 col-sm-7">
+        <div class="panel panel-title">
+          <div class="panel-heading"> 
+            Horizontal Bar Chart Example
+          </div>
+          <div class="panel-body">
+           <canvas id="base" class="chart-horizontal-bar"
+                chart-data="dashboard.hzBarChart.data" chart-labels="dashboard.hzBarChart.labels" >
+            </canvas> 
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4"> 
+        <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+    </div>
+
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+</script>

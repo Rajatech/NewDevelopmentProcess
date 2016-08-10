@@ -1,0 +1,67 @@
+<div id="content">
+<div class="panel panel-default">
+ 	<div class="panel-heading cb-panel-heading">{{client.headerName}}</div>
+	<div class="panel-body">
+		<div class="row margintop10">
+			<div growl inline="true" reference="1"></div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Client Id </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="clientId" ng-model="client.queryForm.clientId"/>
+				 		</div>
+				 </div>
+
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Client Name </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="name" ng-model="client.queryForm.name"/>
+				 		</div>
+				 </div>
+
+			 </div>
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> MAC Address </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="macAddress" ng-model="client.queryForm.macAddress"/>
+				 		</div>
+				 </div>
+
+			 </div>
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> IP Address </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="ipAddress" ng-model="client.queryForm.ipAddress"/>
+				 		</div>
+				 </div>
+
+			 </div>
+		</div>
+		<div class="row margintop25 spacerright35">
+			<div class="col-md-12">
+				<button ng-click="client.customerInquery()" class="btn btn-success"> INQUERY </button>
+			</div>
+		</div>
+		<div class="row margintop25 spacerright35">
+			<div class="detailBlkArea" ng-if="client.enabledCustInq">
+				<pagination manipulate-grid-funct="client.manipulateData(pager)" pager="client.pager" grid-option="client.dataGridOptions" grid-data="client.clients"> </pagination>
+				<div id="grid1"  ui-grid="client.dataGridOptions" ui-grid-exporter class="grid"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
