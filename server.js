@@ -8,7 +8,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false })); 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json()); // Body parser use JSON data
 /*app.use(express.static(__dirname + '/src/app/modules/client'));*/
 app.use(express.static(__dirname + '/src/app'));
 app.use(morgan('dev')); 
