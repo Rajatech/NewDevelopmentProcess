@@ -17,10 +17,6 @@ app.listen(8081, function(){
 	console.log('Server running at 8081 port..');	
 });
 
-/*app.get('/', function(req,res){
-	res.sendfile('./public/index.html');
-});*/
-
 app.get('/getclients', function(req,res){
 	console.log('server received a get request from client..');
 	db.clients.find(function(err,docs){
