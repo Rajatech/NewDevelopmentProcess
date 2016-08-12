@@ -52,7 +52,9 @@ grunt.initConfig({
 
 grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-contrib-uglify');
-
+/*
+ Task registration goes here
+*/
 grunt.registerTask('default',['concat','uglify']);
 
 };
