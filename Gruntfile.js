@@ -54,6 +54,7 @@ grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 /*
  Task registration goes here
+  You can register multiple task here one by one
 */
 grunt.registerTask('default',['concat','uglify']);
 
