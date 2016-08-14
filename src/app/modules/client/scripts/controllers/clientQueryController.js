@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	function ClientQueryController($scope, $http, $filter, clientFactory, PaginationService, growl, $timeout) {
+	function ClientQueryController($scope, $http, $filter, PaginationService, growl, $timeout) {
 
 		var vm = this;
 		vm.queryForm = {};

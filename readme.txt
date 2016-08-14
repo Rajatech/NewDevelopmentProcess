@@ -208,3 +208,6 @@ $ git branch testing
 $ git checkout master
 
 Refer to : https://githowto.com/setup
+
+create a fork
+and sync fork to the origin
