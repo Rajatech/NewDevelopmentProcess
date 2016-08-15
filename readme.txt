@@ -206,8 +206,18 @@ git checkout commitHash --filename
 git commit -am "Added comments for task registration."
 $ git branch testing
 $ git checkout master
+git branch -v
+git origin -v
+git fetch
+git checkout -b b_name
 
 Refer to : https://githowto.com/setup
 
 create a fork
 and sync fork to the origin
+
+/////////////////////////////
+Need to explore angular crud data grid
+and inserting data from pop up 
+////////////////////////////
+
