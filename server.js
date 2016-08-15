@@ -68,6 +68,14 @@ app.post('/getClients', function(req,res){
 	});
 });
 
+app.post('/getCharges', function(req,res){
+	console.log('data sent to server: ' + JSON.stringify(req.body));
+	db.charge.find(req.body,function(err,docs){
+		console.log('Retrived data from db: ' + docs.length);
+		res.json(docs);
+	});
+});
+
 app.get('/data/users.json', function(req,res){
 	var filepath = __dirname + '/src/app/modules/login/scripts/controllers/users.json';
 	res.sendFile(path.normalize(filepath));

@@ -1,0 +1,65 @@
+<div id="content">
+<div class="panel panel-default">
+ 	<div class="panel-heading cb-panel-heading">{{chargeQuery.headerName}}</div>
+	<div class="panel-body">
+		<div class="row margintop10">
+			<div growl inline="true" reference="1"></div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Charge Id </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeId" ng-model="chargeQuery.queryForm.chargeId"/>
+				 		</div>
+				 </div>
+
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Charge Name </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeName" ng-model="chargeQuery.queryForm.chargeName"/>
+				 		</div>
+				 </div>
+
+			 </div>
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Charge Currency </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeCcy" ng-model="chargeQuery.queryForm.chargeCcy"/>
+				 		</div>
+				 </div>
+
+			 </div>
+			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+				 <div class="row">
+				 		<div class="col-md-5">
+				 			<label> Charge Time Basis </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="chargeTimeBasis" ng-model="chargeQuery.queryForm.chargeTimeBasis"/>
+				 		</div>
+				 </div>
+
+			 </div>
+		</div>
+		<div class="row margintop25 spacerright35">
+			<div class="col-md-12">
+				<button ng-click="chargeQuery.chargeInquery()" class="btn btn-success"> INQUERY </button>
+			</div>
+		</div>
+		<div class="row margintop25 spacerright35">
+			<div class="detailBlkArea" ng-if="chargeQuery.enabledInq">
+				<pagination manipulate-grid-funct="chargeQuery.manipulateData(pager)" pager="chargeQuery.pager" grid-option="chargeQuery.dataGridOptions" grid-data="chargeQuery.chargeQuerys"> </pagination>
+				<div id="grid1"  ui-grid="chargeQuery.dataGridOptions" ui-grid-exporter class="grid"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

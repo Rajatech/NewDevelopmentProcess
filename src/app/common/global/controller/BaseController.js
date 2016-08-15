@@ -50,9 +50,63 @@
 			 this.EditMode = true;
 			 this.init();
 		}
+	};
+
+	function AbstractQueryController($scope,$http,$timeout,PaginationService,entityFetchUrl) {
+
+		$scope.disableQueryResult = function(){
+			$scope.enabledInq = false;
+		};
+
+		$scope.enableQueryResult = function(){
+			$scope.enabledInq = true;
+		};
+
+	
+		$scope.initPagination = function () {
+			var pager = PaginationService.getPager(5,$scope.data.length);
+			$scope.pager = pager;
+			$scope.currentPage = 1;
+			$scope.totalPages = pager.totalPages;
+			$scope.recordPerPage = pager.recordPerPage;
+			$scope.dataGridOptions.data = $scope.data.slice($scope.pager.getStartIndex(),$scope.pager.getEndIndex());
+		};
+		
+		$scope.chargeInquery = function(){
+			$scope.enableQueryResult();
+			$scope.fetchResult();	
+		};
+		
+		$scope.getGridOptions = function(){
+			$scope.dataGridOptions = {
+				enableFiltering: true, 
+				enableGridMenu: true, 
+				enableSelectAll: true,
+				exporterCsvFilename: 'data.csv',
+			    exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+			    exporterMenuPdf: false,
+			    onRegisterApi: function(gridApi){
+			      $scope.gridApi = gridApi;
+			    },
+			    data : []
+			};
+		}
+
+		$scope.fetchResult = function() {
+			$http.post('/'+entityFetchUrl,$scope.createNgetEntity()).success(function(d) {
+				$timeout(function(){
+					$scope.data = d;
+					$scope.initPagination();
+				});
+
+			});
+		};
 	}
 	
 	angular.module('billingApp')
 		.controller('AbstractEntryController', AbstractEntryController);
+
+	angular.module('billingApp')
+		.controller('AbstractQueryController', AbstractQueryController);
 
 })();

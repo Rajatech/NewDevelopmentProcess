@@ -80,6 +80,16 @@ app.config(
             controllerAs : 'charge'
           }
       }
+    }).
+    state('home.chargeQuery',{
+      url: '/chargeQuery',
+       views: {
+          'menuContent' : {
+            templateUrl: 'modules/charge/views/partials/chargeQuery.html',
+            controller: 'ChargeQueryController',
+            controllerAs : 'chargeQuery'
+          }
+      }
     })
 
     growlProvider.onlyUniqueMessages(false);
