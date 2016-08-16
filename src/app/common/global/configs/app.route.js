@@ -80,7 +80,37 @@ app.config(
             controllerAs : 'charge'
           }
       }
-    })
+    }).
+    state('home.chargeQuery',{
+      url: '/chargeQuery',
+       views: {
+          'menuContent' : {
+            templateUrl: 'modules/charge/views/partials/chargeQuery.html',
+            controller: 'ChargeQueryController',
+            controllerAs : 'chargeQuery'
+          }
+      }
+    }).
+    state('home.schemeEntry',{
+      url: '/schemeEntry',
+       views: {
+          'menuContent' : {
+            templateUrl: 'modules/scheme/views/partials/schemeEntry.html',
+            controller: 'SchemeEntryController',
+            controllerAs : 'scheme'
+          }
+      }
+    }).
+    state('home.schemeAssignmentEntry',{
+      url: '/schemeAssignmentEntry',
+       views: {
+          'menuContent' : {
+            templateUrl: 'modules/scheme/views/partials/SchemeAssignmentEntry.html',
+            controller: 'SchemeAssignmentEntryController',
+            controllerAs : 'schemeAssignment'
+          }
+      }
+    });
 
     growlProvider.onlyUniqueMessages(false);
     growlProvider.globalInlineMessages(true);

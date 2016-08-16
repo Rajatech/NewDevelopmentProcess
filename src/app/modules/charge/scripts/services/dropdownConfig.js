@@ -32,6 +32,18 @@
 								{id:'Corporate', name:'Corporate'}
 							];
 	 	 dropdowns.dropdown.client = client;
+
+	 	  var scheme = {
+	 	 		entry : {
+	 	 			chargeTypes : [
+								{id:'Net Usage Charge', name:'Net Usage Charge'},
+								{id:'Cable Usage Charge', name:'Cable Usage Charge'}
+							]
+	 	 		}
+	 	 };
+	 	 
+	 	 dropdowns.dropdown.scheme = scheme;
+
 	 	 return dropdowns;
 
 	 }
