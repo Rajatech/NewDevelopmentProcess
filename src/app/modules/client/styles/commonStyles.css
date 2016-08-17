@@ -61,6 +61,9 @@ a {
     padding-bottom: 10px;
     border-right: 1px solid black;
 }
+.cursor-pointer {
+	cursor: pointer;
+}
 .entryHeader {	
 	padding-left: 14px;
 	display: inline-block;

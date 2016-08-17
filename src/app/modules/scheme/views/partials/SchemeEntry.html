@@ -7,7 +7,7 @@
 
 			 <div growl inline="true" reference="1"></div>
 
-			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 cb-">
+			 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 				 <div class="row" ng-show="scheme.EditMode">
 				 		<div class="col-md-5">
 				 			<label> Scheme Id </label>
@@ -20,13 +20,13 @@
 				 		<div class="col-md-5">
 				 			<label> Scheme Id </label>
 				 		</div>
-				 		<div class="col-md-7">
+				 		<div class="col-md-7">;
 				 			<label>{{scheme.form.schemeId}}</label>
 				 		</div>
 				 </div>
 			 </div>
 
-			 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 			 	<div class="row" ng-show="scheme.EditMode">
 				 		<div class="col-md-5">
 				 			<label> Scheme Name </label>
@@ -44,7 +44,75 @@
 				 		</div>
 				 </div>
 			 </div>
-		</div>	
+		</div>
+		<div class="row margintop10">
+			<hr>
+		 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+		 	<div class="row" ng-show="scheme.EditMode">
+			 		<div class="col-md-5">
+			 			<label> Charge Type </label>
+			 		</div>
+			 		<div class="col-md-7">
+			 			<select name="chargeTypes" id="chargeTypes" ng-model="scheme.form.chargeType">
+  							<option ng-repeat="option in scheme.chargeTypes" value="{{option.id}}">{{option.name}}</option>
+						</select>
+			 		</div>
+			 </div>
+		 	</div>
+		 	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+		 	<div class="row" ng-show="scheme.EditMode">
+			 		<div class="col-md-3">
+			 			<label> Charge Id </label>
+			 		</div>
+			 		<div class="col-md-9">
+			 			<input type="text" id="chargeId" ng-model="scheme.form.chargeId"/>
+				 		<button type="button" class="btn btn-default btn-xs glyphicon glyphicon-search" ng-click="scheme.open()"></button>
+				 		<br>
+				 		<button class="btn btn-info btn-md pull-right" ng-show="scheme.EditMode" ng-click="scheme.AddEntry()">
+			 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			 			</button>
+			 		</div>
+			 </div>
+		 	</div>
+		</div>
+
+		<div class="row margintop10">
+		 	<div class="col-xs-12 col-sm-6">
+		 		<table class="animate-if table table-striped table-bordered">
+		 			<thead>
+		 				<th>Action </th>
+		 				<th>Charge Type</th>
+		 				<th>Charge Id</th>
+		 			</thead>
+		 			<tbody>
+		 				<tr ng-repeat="entry in scheme.entries">
+		 				<td> 
+		 				<button class="btn btn-info btn-xs" ng-show="!entry.makeEntryEditable" ng-click="scheme.makeEditable($index)"> 
+		 					<span class="glyphicon glyphicon-pencil"></span> 
+		 				</button>
+		 				<button class="btn btn-info btn-xs" ng-show="!entry.makeEntryEditable" ng-click="scheme.RemoveEntry($index)"> 
+		 					<span class="glyphicon glyphicon-trash"></span> 
+		 				</button>
+		 				<button class="btn btn-info btn-xs" ng-show="entry.makeEntryEditable" ng-click="scheme.SaveUpdate($index)"> 
+		 					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		 				</button>
+		 				<button class="btn btn-info btn-xs" ng-show="entry.makeEntryEditable" ng-click="scheme.CancelUpdate($index)"> 
+		 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		 				</button>
+
+		 				</td> 
+		 				<td ng-show="!entry.makeEntryEditable">{{entry.chargeType}}</td>
+		 				<td ng-show="!entry.makeEntryEditable">{{entry.chargeId}}</td>
+		 				<td ng-show="entry.makeEntryEditable" ><input type="text" ng-model="entry.chargeType"/></td>
+		 				<td ng-show="entry.makeEntryEditable" ><input type="text" ng-model="entry.chargeId"/></td>
+		 				</tr>
+
+		 			</tbody>
+		 		</table>
+		 	</div>
+
+		</div>
+			 	
 	<div class="row margintop25 spacerright35">
 		<div class="col-md-12">
 			<button class="btn btn-success" ng-show="scheme.EditMode" ng-click="scheme.submitEntry()"> SUBMIT </button>
@@ -52,8 +120,7 @@
 			<button class="btn btn-success" ng-show="scheme.ConfirmMode" ng-click="scheme.back()"> BACK </button>
 			<button class="btn btn-success" ng-show="scheme.OkMode" ng-click="scheme.ok()"> OK </button>
 		</div>
-	</div>
-		
+	</div>	
 	</div>
 </div>
 </div>
