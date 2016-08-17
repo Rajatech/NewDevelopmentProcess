@@ -1,0 +1,26 @@
+<div class="modal-header">
+            <h3 class="modal-title">Charges</h3>
+</div>
+<div class="modal-body">
+
+    <table class="animate-if table table-striped table-bordered">
+    	<thead>
+            <th> Select One </th>
+    		<th>Charge Id </th>
+    		<th>Charge Name</th>
+    	</thead>
+    	<tbody>
+    		<tr ng-repeat="charge in chargeDetails.form.charges | limitTo: 6">
+                <td ng-click="chargeDetails.selectCharge($index)" class="cursor-pointer"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span></td>
+    			<td>{{charge.chargeId}}</td>
+    			<td>{{charge.chargeName}}</td>
+    		</tr>
+
+    	</tbody>
+
+    </table>
+    <!-- Selected: <b>{{ selected.charge }}</b> -->
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="chargeDetails.cancel()">Cancel</button>
+</div>
