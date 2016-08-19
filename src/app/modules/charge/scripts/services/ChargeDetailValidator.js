@@ -1,7 +1,7 @@
 (function () {
 	 'use strict';
 
-	 function SchemeValidator () {
+	 function ChargeDetailValidator () {
 	 	 var validator = {};
 	 	 validator.validate = validate;
 	 	 return validator; 
@@ -12,12 +12,12 @@
 
 	 	 	function mandatory(){
 
-	 	 		if(angular.isUndefined(form.schemeId) || form.schemeId == ''){
-	 	 			validationMessages.push('Scheme Id can not be empty.');
+	 	 		if(angular.isUndefined(form.chargeId) || form.chargeId == ''){
+	 	 			validationMessages.push('Charge Id can not be empty.');
 	 	 		}
 
-	 	 		if(angular.isUndefined(form.schemeName) || form.schemeName == ''){
-	 	 			validationMessages.push('Scheme Name can not be empty.');
+	 	 		if(angular.isUndefined(form.chargeType) || form.chargeType == ''){
+	 	 			validationMessages.push('Charge Type can not be empty.');
 	 	 		}
 	 	 	}
 
@@ -33,8 +33,8 @@
 	 	 		success : (validationMessages.length > 0)? false : true
 	 	 	}
 	 	 }
-	 };
+	 }
 
 
-	 angular.module('billingApp').factory('SchemeValidator', SchemeValidator);
+	 angular.module('billingApp').factory('ChargeDetailValidator', ChargeDetailValidator);
 })();

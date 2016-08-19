@@ -20,7 +20,7 @@
 				 		<div class="col-md-5">
 				 			<label> Scheme Id </label>
 				 		</div>
-				 		<div class="col-md-7">;
+				 		<div class="col-md-7">
 				 			<label>{{scheme.form.schemeId}}</label>
 				 		</div>
 				 </div>
@@ -53,7 +53,7 @@
 			 			<label> Charge Type </label>
 			 		</div>
 			 		<div class="col-md-7">
-			 			<select name="chargeTypes" id="chargeTypes" ng-model="scheme.form.chargeType">
+			 			<select name="chargeTypes" id="chargeTypes" ng-model="scheme.chargeType">
   							<option ng-repeat="option in scheme.chargeTypes" value="{{option.id}}">{{option.name}}</option>
 						</select>
 			 		</div>
@@ -65,7 +65,7 @@
 			 			<label> Charge Id </label>
 			 		</div>
 			 		<div class="col-md-9">
-			 			<input type="text" id="chargeId" ng-model="scheme.form.chargeId"/>
+			 			<input type="text" id="chargeId" ng-model="scheme.chargeId"/>
 				 		<button type="button" class="btn btn-default btn-xs glyphicon glyphicon-search" ng-click="scheme.open()"></button>
 				 		<br>
 				 		<button class="btn btn-info btn-md pull-right" ng-show="scheme.EditMode" ng-click="scheme.AddEntry()">
@@ -85,7 +85,7 @@
 		 				<th>Charge Id</th>
 		 			</thead>
 		 			<tbody>
-		 				<tr ng-repeat="entry in scheme.entries">
+		 				<tr ng-repeat="entry in scheme.form.entries">
 		 				<td> 
 		 				<button class="btn btn-info btn-xs" ng-show="!entry.makeEntryEditable" ng-click="scheme.makeEditable($index)"> 
 		 					<span class="glyphicon glyphicon-pencil"></span> 

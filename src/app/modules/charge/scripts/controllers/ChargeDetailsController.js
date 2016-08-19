@@ -2,11 +2,13 @@
 
 	'use strict';
 
-	function ChargeDetailsController($scope, $http, growl, charges, SchemeValidator, DbActionHandler, DropdownConfig, $timeout, $controller, $uibModalInstance){
+	function ChargeDetailsController($scope, $http, growl, charges, DbActionHandler, DropdownConfig, $timeout, $controller, $uibModalInstance){
 		var vm = this;
 
 		vm.form = {};
 		vm.form.charges = charges;
+		vm.currentPage = 1;
+		vm.maxSize = 5;
 
 		vm.ok = function () {
 			var selectedChargeId = vm.form.charges[vm.form.selectedIndex];
