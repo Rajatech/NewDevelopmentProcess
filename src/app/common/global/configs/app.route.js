@@ -107,7 +107,7 @@ app.config(
           'menuContent' : {
             templateUrl: 'modules/scheme/views/partials/SchemeAssignmentEntry.html',
             controller: 'SchemeAssignmentEntryController',
-            controllerAs : 'schemeAssignment'
+            controllerAs : 'sAssignment'
           }
       }
     });

@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var morgan = require('morgan');
 var mongojs = require('mongojs');
-var db = mongojs('mongoapp',['clients','charge']);
+var db = mongojs('mongoapp',['clients','charge','scheme','scheme_assignment']);
 var path = require('path');
 
 var bodyParser = require('body-parser');
@@ -60,6 +60,22 @@ app.post('/confirmChargeForm', function(req,res, collectionName){
 	});
 });
 
+app.post('/confirmSchemeForm', function(req,res, collectionName){
+	db.scheme.save(req.body,function(err,saved){
+		if(err || !saved)
+		console.log('[ERROR] Server fail to save data in db..');
+		console.log('New Scheme entity saved..');
+	});
+});
+
+app.post('/confirmSchemeAssignmentForm', function(req,res, collectionName){
+	db.scheme_assignment.save(req.body,function(err,saved){
+		if(err || !saved)
+		console.log('[ERROR] Server fail to save data in db..');
+		console.log('New Scheme Assignment entity saved..');
+	});
+});
+
 app.post('/getClients', function(req,res){
 	console.log('data sent to server: ' + JSON.stringify(req.body));
 	db.clients.find(req.body,function(err,docs){
@@ -71,6 +87,14 @@ app.post('/getClients', function(req,res){
 app.post('/getCharges', function(req,res){
 	console.log('data sent to server: ' + JSON.stringify(req.body));
 	db.charge.find(req.body,function(err,docs){
+		console.log('Retrived data from db: ' + docs.length);
+		res.json(docs);
+	});
+});
+
+app.post('/getSchemes', function(req,res){
+	console.log('data sent to server: ' + JSON.stringify(req.body));
+	db.scheme.find(req.body,function(err,docs){
 		console.log('Retrived data from db: ' + docs.length);
 		res.json(docs);
 	});
