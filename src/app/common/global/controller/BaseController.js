@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	function AbstractEntryController($scope,DbActionHandler,validator,growl,entryScreenName,confirmUrl) {
+	function AbstractEntryController($scope,DbActionHandler,validator,growl,entryScreenName,confirmUrl,$log) {
 		$scope.submitEntry = function () {
 			var validationResult = validator.validate(this.form);
 			var messages = '';
@@ -42,7 +42,7 @@
 			this.ConfirmMode = false;
 			this.OkMode = true;
 
-			DbActionHandler.saveInDB(confirmUrl,this.form);
+			DbActionHandler.post(confirmUrl,this.form);
 		},
 		$scope.ok = function () {
 			 this.OkMode = false;
@@ -52,7 +52,7 @@
 		}
 	};
 
-	function AbstractQueryController($scope,$http,$timeout,PaginationService,entityFetchUrl) {
+	function AbstractQueryController($scope,$http,$timeout,PaginationService,entityFetchUrl,DbActionHandler,$log) {
 
 		$scope.disableQueryResult = function(){
 			$scope.enabledInq = false;
@@ -93,9 +93,16 @@
 		}
 
 		$scope.fetchResult = function() {
-			$http.post('/'+entityFetchUrl,$scope.createNgetEntity()).success(function(d) {
+
+			$http.get(DbActionHandler.restUrl+entityFetchUrl).success(function(d) {
 				$timeout(function(){
-					$scope.data = d;
+					var dArr = [];
+
+					angular.forEach(d, function(charge,index){
+						dArr.push(charge);
+					});
+					
+					$scope.data = dArr;
 					$scope.initPagination();
 				});
 

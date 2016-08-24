@@ -1,6 +1,10 @@
 var app = angular.module('billingApp');
 
-app.config(
+app.config(['$httpProvider',function ($httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+ }])
+.config(
   function($stateProvider, $urlRouterProvider, growlProvider, USER_ROLES) {
     $urlRouterProvider.otherwise('/');
     $stateProvider.

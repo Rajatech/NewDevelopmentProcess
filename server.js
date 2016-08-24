@@ -13,6 +13,13 @@ app.use(bodyParser.json()); // Body parser use JSON data
 app.use(express.static(__dirname + '/src/app'));
 app.use(morgan('dev')); 
 
+
+var querystring = require('querystring');
+var http = require('http');
+
+var host = 'http://localhost:8080';
+
+
 app.listen(8081, function(){
 	console.log('Server running at 8081 port..');	
 });

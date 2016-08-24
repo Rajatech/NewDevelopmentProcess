@@ -2,19 +2,35 @@
 
 	'use strict';
 
-	function DbActionHandler ($http) {
+	function DbActionHandler ($http,$log) {
 		 
-		 var actionHandler = {};
+		var actionHandler = {};
 
-		 actionHandler.saveInDB = function (url,reqData) {
-		 
-		 	$http.post(url, reqData).success(function(data, status, header, config) {
-				console.log('Saved new entity..')
-			}).error(function(data, status, header, config) {
-				//handle error condition
-			});
+		actionHandler.restUrl = 'http://localhost:8080/';
 
+		actionHandler.post = function(entityUrl,entity){
+
+		 	$http.post(actionHandler.restUrl+entityUrl, entity)
+		 		 .success(function(data, status, header, config) {
+					$log('[Success] Saved new entity..' + JSON.stringify(data));
+				 })
+				 .error(function(data, status, header, config) {
+					$log('[Error] Fail to save entity..' + JSON.stringify(data));
+				 });
 		 }
+
+		actionHandler.get = function(entityFetchUrl,entity){
+			$http.get(actionHandler.restUrl+entityFetchUrl).success(function(d) {
+				$timeout(function(){
+					var dArr = [];
+					angular.forEach(d, function(entity,index){
+						dArr.push(entity);
+					});
+					//$scope.data = dArr;
+				});
+
+			});
+		}
 
 		 return actionHandler;
 	}
