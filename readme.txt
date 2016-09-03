@@ -221,3 +221,6 @@ Need to explore angular crud data grid
 and inserting data from pop up 
 ////////////////////////////
 
+https://www.youtube.com/watch?v=OMcWgmkMpEE
+http://passportjs.org/
+https://developers.facebook.com/apps/
