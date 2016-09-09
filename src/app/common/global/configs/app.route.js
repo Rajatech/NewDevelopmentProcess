@@ -28,7 +28,7 @@ app.config(['$httpProvider',function ($httpProvider) {
       views: {
           'menu' :{
             templateUrl: 'modules/menu/views/partials/menu.html',
-            controller: 'menuCtrl',
+            controller: 'menuController',
             controllerAs: 'menu'
           }
       },
@@ -123,10 +123,12 @@ app.config(['$httpProvider',function ($httpProvider) {
 
 //@todo : need to explore event broadcast
 
-app.run(function($rootScope, $state){
+app.run(['$rootScope', '$state', '$cookies','$cookieStore', function($rootScope, $state, $cookies, $cookieStore){
    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-    
-    var data = toState.data || {};
+    alert($cookies.passport);
+
+
+   /* var data = toState.data || {};
 
     var requireLogin = data.requireLogin || false;
 
@@ -152,8 +154,8 @@ app.run(function($rootScope, $state){
     if(!isAccessible){
      $rootScope.$broadcast('unAuthorizedAccess', {})
      event.preventDefault();
-    }
+    }*/
 
 });
 
-});
+}]);
