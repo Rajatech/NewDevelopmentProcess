@@ -11,6 +11,7 @@
 		vm.userRole = undefined;
 
 		vm.loginHandler = function(){
+			console.log('inside login handler');
 			LoginService.validate({userName : vm.userName, userPassword : vm.userPassword, userRole : vm.userRole});
 			
 			$rootScope.$on('loginFailure', function(event, data){

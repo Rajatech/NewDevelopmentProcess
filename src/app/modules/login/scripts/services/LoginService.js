@@ -1,23 +1,22 @@
 (function(){
 	'use strict';
-	function LoginService ($http,UserService, USER_ROLES, $rootScope,$state) {
+	function LoginService ($http, $q, UserService, USER_ROLES, $rootScope,$state) {
 			
 			var service = {};
 			service. validate = {};
 			
 			service.validate = function(user){
 
-				$http.get('data/users.json').then(function(res){
+				$http.post('/login',{username:user.userName, password:user.userPassword})
+				.success(function(data,status){
 
 	          		var isValidUser = false;
 	          	
-	          		angular.forEach(res.data.users, function(value, key){
-	          			if(user.userName == value.name && user.userPassword == value.password){
-	          				isValidUser = true;	
-	          				user.userRole = USER_ROLES[value.roleType];
-	          				return;
-	          			}
-	          		});
+          			if(status === 200 && data.status){
+          				isValidUser = true;	
+          				user.userRole = USER_ROLES[data.role];
+          			}
+	          	
 
 	          		if(isValidUser){
 	          			UserService.setLoggedInUser({name : user.userName, password : user.userPassword, role : user.userRole});
@@ -29,7 +28,32 @@
 	          			$rootScope.$broadcast('loginFailure', {user : user.userName, reason : 'unauthorized access', errorCode : '401'});
 	          		}
           		
-        		});
+        		}).error(function (data) {
+			      	var isValidUser = false;
+			      	$rootScope.isAnyUserLoggedIn = false;
+	          		$rootScope.$broadcast('loginFailure', {user : user.userName, reason : 'unauthorized access', errorCode : '401'});
+			    })
+			}
+
+			service.logout = function(){
+
+				// create a new instance of deferred
+  				var deferred = $q.defer();
+
+				$http.get('/logout')
+				.success(function(data){
+	          		var isValidUser = false;
+	          		$rootScope.isAnyUserLoggedIn = false;
+          			$rootScope.userRole = '';	          	
+          			UserService.setLoggedInUser({});
+          			deferred.resolve();
+        		}).error(function (data) {
+			      	var isValidUser = false;
+			      	$rootScope.isAnyUserLoggedIn = false;
+			      	deferred.reject();
+			    });
+
+			    return deferred.promise;
 			}
 
 			return service;

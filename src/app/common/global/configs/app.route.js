@@ -128,7 +128,7 @@ app.run(['$rootScope', '$state', '$cookies','$cookieStore', function($rootScope,
     alert($cookies.passport);
 
 
-   /* var data = toState.data || {};
+   var data = toState.data || {};
 
     var requireLogin = data.requireLogin || false;
 
@@ -154,7 +154,7 @@ app.run(['$rootScope', '$state', '$cookies','$cookieStore', function($rootScope,
     if(!isAccessible){
      $rootScope.$broadcast('unAuthorizedAccess', {})
      event.preventDefault();
-    }*/
+    }
 
 });
 
