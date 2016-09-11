@@ -1,6 +1,6 @@
 (function(){
 
-	function MenuController($state, $rootScope, UserService) {
+	function MenuController($state, $rootScope, $http, UserService) {
 	
 		var vm = this;
 		vm.header = 'Menu Items';
@@ -40,14 +40,9 @@
 			alert('You don\'t have permission to access this.');
 		});
 
-		vm.expireSession = function(){
-			UserService.expireSession();	
-			$state.go('login');
-		} 
-		
 	};
 
 	angular.module('billingApp')
-		.controller('menuCtrl', MenuController);
+		.controller('menuController', MenuController);
 
 })();

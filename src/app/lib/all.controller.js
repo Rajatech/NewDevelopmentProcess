@@ -2,13 +2,45 @@
 
 	'use strict';
 
-	function ChargeEntryController($scope, $http, growl, ChargeValidator, DbActionHandler, DropdownConfig, $timeout, $controller){
+	function ChargeDetailsController($scope, $http, growl, charges, DbActionHandler, DropdownConfig, $timeout, $controller, $uibModalInstance){
+		var vm = this;
+
+		vm.form = {};
+		vm.form.charges = charges;
+		vm.currentPage = 1;
+		vm.maxSize = 5;
+
+		vm.ok = function () {
+			var selectedChargeId = vm.form.charges[vm.form.selectedIndex];
+    		$uibModalInstance.close(selectedChargeId.chargeId);
+  		};
+
+  		vm.cancel = function () {
+    		$uibModalInstance.dismiss('cancel');
+  		};
+
+  		vm.selectCharge = function(index){
+  			vm.form.selectedIndex = index;
+  			vm.ok();
+  		};
+
+
+	}
+
+	angular.module('billingApp')
+		.controller('ChargeDetailsController', ChargeDetailsController);
+
+})();;(function() {
+
+	'use strict';
+
+	function ChargeEntryController($scope, $http, growl, ChargeValidator, DbActionHandler, DropdownConfig, $timeout, $controller, $log){
 		var vm = this;
 
 		vm.form = {};
 
 		angular.extend(vm, $controller('AbstractEntryController', 
-						   {$scope:vm, DbActionHandler:DbActionHandler, validator : ChargeValidator, growl : growl, entryScreenName : 'Charge Entry',confirmUrl : '/confirmChargeForm'}));
+						   {$scope:vm, DbActionHandler:DbActionHandler, validator : ChargeValidator, growl : growl, entryScreenName : 'Charge Entry',confirmUrl : '/charge', $log : $log}));
 
 		vm.init = function (argument) {
 			vm.headerName = 'Charge Entry';
@@ -30,14 +62,14 @@
 
 	'use strict';
 
-	function ChargeQueryController($scope, $http, $filter, $controller, PaginationService, growl, $timeout) {
+	function ChargeQueryController($scope, $http, $filter, $controller, PaginationService, growl, $timeout, DbActionHandler, $log) {
 
 		var vm = this;
 		vm.queryForm = {};
 		vm.pager = {};
 
 		angular.extend(vm, $controller('AbstractQueryController', 
-						   {$scope:vm, $http : $http, $timeout:$timeout,PaginationService :PaginationService, entityFetchUrl : 'getCharges'}));
+						   {$scope:vm, $http : $http, $timeout : $timeout, PaginationService :PaginationService, entityFetchUrl : 'charge', DbActionHandler : DbActionHandler, $log : $log}));
 
 		vm.initQuery = function () {
 			vm.headerName = 'Charge Query';
@@ -96,7 +128,7 @@
 		vm.form = form;
 
 		angular.extend(vm, $controller('AbstractEntryController', 
-						   {$scope:vm, DbActionHandler:DbActionHandler, validator : ClientValidator, growl : growl, entryScreenName : 'Client Entry',confirmUrl : '/confirmForm'}));
+						   {$scope:vm, DbActionHandler:DbActionHandler, validator : ClientValidator, growl : growl, entryScreenName : 'Client Entry',confirmUrl : '/client', $log : $log}));
 		//Entry
 		vm.init = function() {
 				vm.headerName = 'Client Entry';
@@ -294,7 +326,7 @@
     $interval(y, 15000);
   		
 		vm.hzBarChart = {};
-		vm.hzBarChart.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+		vm.hzBarChart.labels = ['2011', '2012'];
 		vm.hzBarChart.series = ['Series A', 'Series B'];
 		vm.hzBarChart.data =  [
 							      [65, 59, 80, 81, 56, 55, 40],
@@ -436,7 +468,101 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 
 	'use strict';
 
-	function SchemeEntryController($scope, $http, growl, SchemeValidator, DbActionHandler, DropdownConfig, $timeout, $controller){
+	function SchemeAssignmentEntryController($scope, $http, $log, growl, SchemeAssignmentValidator, DbActionHandler, $timeout, $controller, $uibModal, DatepickerConfig){
+		var vm = this;
+
+		vm.form = {};
+
+		angular.extend(vm, $controller('AbstractEntryController', 
+						   {$scope:vm, DbActionHandler:DbActionHandler, validator : SchemeAssignmentValidator, growl : growl, entryScreenName : 'Scheme Assignment Entry',confirmUrl : '/confirmSchemeAssignmentForm'}));
+
+		vm.init = function (argument) {
+			vm.headerName = 'Scheme Assignment Entry';
+			vm.form.schemeId = undefined;
+			vm.form.schemeStartDate = undefined;
+			vm.EditMode = true;
+
+			$http.post('/getSchemes',{}).success(function(d) {
+				$timeout(function(){
+					vm.schemes = d;
+				});
+
+			});
+		};
+
+		vm.dateOptions = DatepickerConfig.dateOptions;
+		vm.format = DatepickerConfig.format;
+
+		vm.DobPopup = {
+			opened: false
+		};
+
+		vm.openDobPopup = function() {
+			vm.DobPopup.opened = true;
+		};
+
+		vm.open = function () {
+    		var modalInstance = $uibModal.open({
+				templateUrl : 'modules/scheme/views/partials/SchemeDetails.html',
+				controller  : 'SchemeDetailsController',
+				controllerAs : 'SchemeDetails',
+				resolve: {
+        			schemes: function () {
+          				return vm.schemes;
+        			}
+      			}
+			});
+
+			modalInstance.result.then(function (selSchemeId) {
+      			vm.selSchemeId = selSchemeId;
+      			vm.form.schemeId = vm.selSchemeId;
+    		}, function () {
+      			$log.info('Modal dismissed at: ' + new Date());
+    		});
+		};
+
+   		vm.init();
+	}
+
+	angular.module('billingApp')
+		.controller('SchemeAssignmentEntryController', SchemeAssignmentEntryController);
+
+})();;(function() {
+
+	'use strict';
+
+	function SchemeDetailsController($scope, $http, growl, schemes, DbActionHandler, DropdownConfig, $timeout, $controller, $uibModalInstance){
+		var vm = this;
+
+		vm.form = {};
+		vm.form.schemes = schemes;
+		vm.currentPage = 1;
+		vm.maxSize = 5;
+
+		vm.ok = function () {
+    		$uibModalInstance.close(vm.form.selectedIndex);
+  		};
+
+  		vm.cancel = function () {
+    		$uibModalInstance.dismiss('cancel');
+  		};
+
+  		vm.selectScheme = function(schemeId){
+  			vm.form.selectedIndex = schemeId;
+  			vm.ok();
+  		};
+
+
+	}
+
+	angular.module('billingApp')
+		.controller('SchemeDetailsController', SchemeDetailsController);
+
+})();;(function() {
+
+	'use strict';
+
+	function SchemeEntryController($scope, $http, $log, growl, SchemeValidator, ChargeDetailValidator, DbActionHandler, DropdownConfig, $timeout, $controller, $uibModal){
 		var vm = this;
 
 		vm.form = {};
@@ -446,14 +572,95 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 
 		vm.init = function (argument) {
 			vm.headerName = 'Scheme Entry';
-			vm.form.chargeId = undefined;
+			vm.chargeId = undefined;
 			vm.form.schemeId = undefined;
 			vm.form.schemeName = undefined;
 			vm.chargeTypes = DropdownConfig.dropdown.scheme.entry.chargeTypes;
-			vm.form.chargeType = undefined;
+			vm.chargeType = undefined;
 			vm.EditMode = true;
+			vm.form.entries = [];
+
+			$http.post('/getCharges',{}).success(function(d) {
+				$timeout(function(){
+					vm.charges = d;
+				});
+
+			});
+		};
+
+		vm.AddEntry = function(){
+
+			var validationResult = ChargeDetailValidator.validate(vm);
+			var messages = '';
+			angular.forEach(validationResult.validationMessages, function(msg, index) {
+				if (messages.length == 0){
+					messages = messages + msg;
+				}else{
+					messages = messages + '</br>' + msg;
+				}
+				
+			});
+
+			if (messages.length != 0) {
+				growl.warning(messages, {
+					ttl: -1,
+					referenceId: 1
+				});
+				return;
+			}else{
+				var entry = {};
+				entry.chargeType = vm.chargeType;
+				entry.chargeId = vm.chargeId;
+				entry.makeEntryEditable = false;
+				vm.form.entries.push(entry);
+				vm.clearForm();
+			}
+			
+		};
+
+		vm.makeEditable = function(index){
+			var entry = vm.form.entries[index];
+			entry.makeEntryEditable = true;
 		}
-		vm.init();
+		vm.SaveUpdate = function(index){
+			var entry = vm.form.entries[index];
+			entry.makeEntryEditable = false;
+		};
+		vm.CancelUpdate = function(index){
+			var entry = vm.form.entries[index];
+			entry.makeEntryEditable = false;
+		};
+
+		vm.RemoveEntry = function(index){
+			vm.form.entries.splice(index,1);
+		};
+
+		vm.clearForm = function(){
+			vm.chargeId = null;
+			vm.chargeType = null;
+		};
+
+		vm.open = function () {
+    		var modalInstance = $uibModal.open({
+				templateUrl : 'modules/scheme/views/partials/ChargeDetails.html',
+				controller  : 'ChargeDetailsController',
+				controllerAs : 'chargeDetails',
+				resolve: {
+        			charges: function () {
+          				return vm.charges;
+        			}
+      			}
+			});
+
+			modalInstance.result.then(function (selectedChargeId) {
+      			vm.selectedChargeId = selectedChargeId;
+      			vm.chargeId = vm.selectedChargeId;
+    		}, function () {
+      			$log.info('Modal dismissed at: ' + new Date());
+    		});
+		};
+
+   		vm.init();
 	}
 
 	angular.module('billingApp')

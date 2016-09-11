@@ -1,0 +1,60 @@
+<div id="content">
+<div class="panel panel-default">
+
+	<div class="panel-heading cb-panel-heading">{{sAssignment.headerName}}</div>
+	<div class="panel-body">
+		<div class="row margintop10">
+
+			 <div growl inline="true" reference="1"></div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+				 <div class="row" ng-show="sAssignment.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Scheme Id </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<input type="text" id="schemeId" ng-model="sAssignment.form.schemeId"/>
+				 			<button type="button" class="btn btn-default btn-xs glyphicon glyphicon-search" ng-click="sAssignment.open()"></button>
+				 		</div>
+				 </div>
+				 <div class="row" ng-show="!sAssignment.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Scheme Id </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<label>{{sAssignment.form.schemeId}}</label>
+				 		</div>
+				 </div>
+			 </div>
+
+			 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+			 	<div class="row" ng-show="sAssignment.EditMode">
+				 		<div class="col-md-7">
+				 			<label> Scheme Start Date </label>
+				 		</div>
+				 		<div class="col-md-5">
+				 			<input ng-show="sAssignment.EditMode" type="text" uib-datepicker-popup="{{sAssignment.format}}" ng-model="sAssignment.form.schemeStartDate" is-open="sAssignment.DobPopup.opened" datepicker-options="sAssignment.dateOptions" ng-required="true" show-button-bar="false" ng-click="sAssignment.openDobPopup()" />
+				 		</div>
+				 </div>
+				 <div class="row" ng-show="!sAssignment.EditMode">
+				 		<div class="col-md-5">
+				 			<label> Scheme Start Date </label>
+				 		</div>
+				 		<div class="col-md-7">
+				 			<label> {{sAssignment.form.schemeStartDate | date:"MM/dd/yyyy"}} </label>
+				 		</div>
+				 </div>
+			 </div>
+		</div>
+			 	
+		<div class="row margintop25 spacerright35">
+			<div class="col-md-12">
+				<button class="btn btn-success" ng-show="sAssignment.EditMode" ng-click="sAssignment.submitEntry()"> SUBMIT </button>
+				<button class="btn btn-success" ng-show="sAssignment.ConfirmMode" ng-click="sAssignment.confirmEntry()"> CONFIRM </button>
+				<button class="btn btn-success" ng-show="sAssignment.ConfirmMode" ng-click="sAssignment.back()"> BACK </button>
+				<button class="btn btn-success" ng-show="sAssignment.OkMode" ng-click="sAssignment.ok()"> OK </button>
+			</div>
+		</div>	
+	</div>
+</div>
+</div>

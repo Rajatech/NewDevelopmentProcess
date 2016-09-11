@@ -1,7 +1,7 @@
 (function () {
 	 'use strict';
 
-	 function SchemeValidator () {
+	 function SchemeAssignmentValidator () {
 	 	 var validator = {};
 	 	 validator.validate = validate;
 	 	 return validator; 
@@ -16,8 +16,8 @@
 	 	 			validationMessages.push('Scheme Id can not be empty.');
 	 	 		}
 
-	 	 		if(angular.isUndefined(form.schemeName) || form.schemeName == ''){
-	 	 			validationMessages.push('Scheme Name can not be empty.');
+	 	 		if(angular.isUndefined(form.schemeStartDate) || form.schemeStartDate == ''){
+	 	 			validationMessages.push('Scheme Start Date can not be empty.');
 	 	 		}
 	 	 	}
 
@@ -33,8 +33,8 @@
 	 	 		success : (validationMessages.length > 0)? false : true
 	 	 	}
 	 	 }
-	 };
+	 }
 
 
-	 angular.module('billingApp').factory('SchemeValidator', SchemeValidator);
+	 angular.module('billingApp').factory('SchemeAssignmentValidator', SchemeAssignmentValidator);
 })();

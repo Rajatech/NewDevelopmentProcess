@@ -1,6 +1,10 @@
 var app = angular.module('billingApp');
 
-app.config(
+app.config(['$httpProvider',function ($httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+ }])
+.config(
   function($stateProvider, $urlRouterProvider, growlProvider, USER_ROLES) {
     $urlRouterProvider.otherwise('/');
     $stateProvider.
@@ -24,7 +28,7 @@ app.config(
       views: {
           'menu' :{
             templateUrl: 'modules/menu/views/partials/menu.html',
-            controller: 'menuCtrl',
+            controller: 'menuController',
             controllerAs: 'menu'
           }
       },
@@ -107,7 +111,7 @@ app.config(
           'menuContent' : {
             templateUrl: 'modules/scheme/views/partials/SchemeAssignmentEntry.html',
             controller: 'SchemeAssignmentEntryController',
-            controllerAs : 'schemeAssignment'
+            controllerAs : 'sAssignment'
           }
       }
     });
@@ -119,10 +123,12 @@ app.config(
 
 //@todo : need to explore event broadcast
 
-app.run(function($rootScope, $state){
+app.run(['$rootScope', '$state', '$cookies','$cookieStore', function($rootScope, $state, $cookies, $cookieStore){
    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-    
-    var data = toState.data || {};
+    alert($cookies.passport);
+
+
+   /* var data = toState.data || {};
 
     var requireLogin = data.requireLogin || false;
 
@@ -148,8 +154,8 @@ app.run(function($rootScope, $state){
     if(!isAccessible){
      $rootScope.$broadcast('unAuthorizedAccess', {})
      event.preventDefault();
-    }
+    }*/
 
 });
 
-});
+}]);

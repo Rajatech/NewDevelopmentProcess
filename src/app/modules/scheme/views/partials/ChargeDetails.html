@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="modal-header">
+                <h3 class="modal-title">Charges</h3>
+            </div>
+
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-sm-12">
+            <div class="modal-body">
+                <table class="animate-if table table-striped table-bordered">
+                    <thead>
+                        <th width="8%">Select</th>
+                        <th>Charge Id </th>
+                        <th>Charge Name</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="charge in chargeDetails.form.charges | startFrom: (chargeDetails.currentPage-1)*chargeDetails.maxSize | limitTo:chargeDetails.maxSize">
+                            <td ng-click="chargeDetails.selectCharge($index)" class="cursor-pointer"><span class="glyphicon glyphicon-chevron-left text-center" aria-hidden="true"></span></td>
+                            <td>{{charge.chargeId}}</td>
+                            <td>{{charge.chargeName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <ul uib-pagination total-items="chargeDetails.form.charges.length" ng-model="chargeDetails.currentPage" max-size="chargeDetails.maxSize" class="pagination-sm" boundary-link-numbers="true"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="chargeDetails.cancel()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+

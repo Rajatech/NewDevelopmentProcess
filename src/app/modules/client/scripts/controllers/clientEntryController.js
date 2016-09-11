@@ -9,7 +9,7 @@
 		vm.form = form;
 
 		angular.extend(vm, $controller('AbstractEntryController', 
-						   {$scope:vm, DbActionHandler:DbActionHandler, validator : ClientValidator, growl : growl, entryScreenName : 'Client Entry',confirmUrl : '/confirmForm'}));
+						   {$scope:vm, DbActionHandler:DbActionHandler, validator : ClientValidator, growl : growl, entryScreenName : 'Client Entry',confirmUrl : '/client', $log : $log}));
 		//Entry
 		vm.init = function() {
 				vm.headerName = 'Client Entry';

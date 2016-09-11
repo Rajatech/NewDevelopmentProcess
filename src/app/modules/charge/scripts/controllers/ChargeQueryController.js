@@ -2,14 +2,14 @@
 
 	'use strict';
 
-	function ChargeQueryController($scope, $http, $filter, $controller, PaginationService, growl, $timeout) {
+	function ChargeQueryController($scope, $http, $filter, $controller, PaginationService, growl, $timeout, DbActionHandler, $log) {
 
 		var vm = this;
 		vm.queryForm = {};
 		vm.pager = {};
 
 		angular.extend(vm, $controller('AbstractQueryController', 
-						   {$scope:vm, $http : $http, $timeout:$timeout,PaginationService :PaginationService, entityFetchUrl : 'getCharges'}));
+						   {$scope:vm, $http : $http, $timeout : $timeout, PaginationService :PaginationService, entityFetchUrl : 'charge', DbActionHandler : DbActionHandler, $log : $log}));
 
 		vm.initQuery = function () {
 			vm.headerName = 'Charge Query';
