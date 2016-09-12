@@ -61,7 +61,7 @@ passport.use('login',new LocalStrategy(
 	},
     function(req, username, password, done) {
 	   
-	   console.log('Inside Passport Local strategy..\nStarting login authentication process..');
+	   console.log('Inside Passport Local strategy..\nStarting login authentication process for user '+ username);
 
 	   User.getUserByUsername(username, function(err, user){
 	   	
@@ -94,22 +94,38 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-app.post('/login',
-  passport.authenticate('login', 
-  		{
-  		  	successRedirect:'/#/home/dashboard', 
-  		    failureRedirect:'/',
-  		    failureFlash : true 
-  		}
-  )
-);
+app.post('/login', function(req, res, next) {
+  passport.authenticate('login', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({
+        err: info
+      });
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return res.status(500).json({
+          err: 'Could not log in user'
+        });
+      }
+      res.status(200).json({
+        status: 'Login successful!',
+        role: user.role
+      });
+    });
+  })(req, res, next);
+  });
 
 app.get('/logout', function(req, res){
 	
 	console.log('IN NODE SERVER : LOGOUT'+ JSON.stringify(req.user));
 	req.logout();
 
-	res.redirect('/');
+	res.status(200).json({
+    	status: 'Bye!'
+  	});
 });
 
 app.get('/sendSession', function(req,res){

@@ -399,6 +399,7 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 		vm.userRole = undefined;
 
 		vm.loginHandler = function(){
+			console.log('inside login handler');
 			LoginService.validate({userName : vm.userName, userPassword : vm.userPassword, userRole : vm.userRole});
 			
 			$rootScope.$on('loginFailure', function(event, data){
@@ -414,7 +415,7 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 
 })();;(function(){
 
-	function MenuController($state, $rootScope, UserService) {
+	function MenuController($state, $rootScope, $http, UserService, LoginService, $state) {
 	
 		var vm = this;
 		vm.header = 'Menu Items';
@@ -450,19 +451,20 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 			 $state.go('login');
 		}
 		
+		vm.expireSession = function(){
+		    LoginService.logout().then(function () {
+		          $state.go('login');
+		    });
+		}
+
 		$rootScope.$on('unAuthorizedAccess', function(data){
 			alert('You don\'t have permission to access this.');
 		});
 
-		vm.expireSession = function(){
-			UserService.expireSession();	
-			$state.go('login');
-		} 
-		
 	};
 
 	angular.module('billingApp')
-		.controller('menuCtrl', MenuController);
+		.controller('menuController', MenuController);
 
 })();;(function() {
 

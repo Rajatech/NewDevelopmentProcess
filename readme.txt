@@ -221,6 +221,11 @@ Need to explore angular crud data grid
 and inserting data from pop up 
 ////////////////////////////
 
+<<<<<<< HEAD
+https://www.youtube.com/watch?v=OMcWgmkMpEE
+http://passportjs.org/
+https://developers.facebook.com/apps/
+=======
 
 Authentivcation: (Added on 09-Sep-16)
 =====================================
@@ -232,3 +237,4 @@ https://www.airpair.com/express/posts/expressjs-and-passportjs-sessions-deep-div
 https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions
 https://glebbahmutov.com/blog/express-sessions/
 http://stackoverflow.com/questions/10961963/how-to-access-cookies-in-angularjs
+>>>>>>> ndp_upstream/master

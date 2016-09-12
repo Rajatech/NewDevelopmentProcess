@@ -1,6 +1,6 @@
 (function(){
 
-	function MenuController($state, $rootScope, $http, UserService) {
+	function MenuController($state, $rootScope, $http, UserService, LoginService, $state) {
 	
 		var vm = this;
 		vm.header = 'Menu Items';
@@ -36,6 +36,12 @@
 			 $state.go('login');
 		}
 		
+		vm.expireSession = function(){
+		    LoginService.logout().then(function () {
+		          $state.go('login');
+		    });
+		}
+
 		$rootScope.$on('unAuthorizedAccess', function(data){
 			alert('You don\'t have permission to access this.');
 		});
