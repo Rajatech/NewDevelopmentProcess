@@ -403,7 +403,7 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 			LoginService.validate({userName : vm.userName, userPassword : vm.userPassword, userRole : vm.userRole});
 			
 			$rootScope.$on('loginFailure', function(event, data){
-				alert('Hey ' + data.user +'! You are not a valid user.\nPlease check your credentials');
+				alert('Could\'nt log in\n' + data.reason);
 			});
 		};
 
