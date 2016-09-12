@@ -94,31 +94,40 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+
 app.post('/login', function(req, res, next) {
   passport.authenticate('login', function(err, user, info) {
     if (err) {
       return next(err);
     }
+
     if (!user) {
       return res.status(401).json({
-        err: info
+        success : false,
+        error : 'Unauthorised access',
+        errorCode : '401'
       });
     }
+
     req.logIn(user, function(err) {
       if (err) {
         return res.status(500).json({
-          err: 'Could not log in user'
+          success : false,
+          error : 'Internal error',
+          errorCode : '500'
         });
       }
       res.status(200).json({
-        status: 'Login successful!',
+      	success: true,
+        info: 'Login successful!',
         role: user.role
       });
     });
+
   })(req, res, next);
   });
 
-app.get('/logout', function(req, res){
+app.get('/logout', isLoggedIn, function(req, res){
 	
 	console.log('IN NODE SERVER : LOGOUT'+ JSON.stringify(req.user));
 	req.logout();
@@ -127,13 +136,20 @@ app.get('/logout', function(req, res){
     	status: 'Bye!'
   	});
 });
+function isLoggedIn(req, res, next){
 
-app.get('/sendSession', function(req,res){
-	res.json(req.user);
+	if(req.isAuthenticated()){
+		next();
+	}
+	res.redirect('/');
+
+}
+app.get('/sendSession', isLoggedIn, function(req,res){
+	res.json(req.user).end();
 });
 
 //request handler
-app.get('/getclients', function(req,res){
+app.get('/getclients', isLoggedIn, function(req,res){
 	console.log('server received a get request from client..');
 	db.clients.find(function(err,docs){
 		console.log('Retrived data from db: ' + docs);
@@ -141,7 +157,7 @@ app.get('/getclients', function(req,res){
 	});
 });
 
-app.post('/saveNewContact', function(req,res){
+app.post('/saveNewContact', isLoggedIn, function(req,res){
 	console.log('server received a get request from client to save new contact..');
 	db.clients.save(req.body,function(err,saved){
 		if(err || !saved)
@@ -150,7 +166,7 @@ app.post('/saveNewContact', function(req,res){
 	});
 });
 
-app.post('/deleteContact', function(req,res){
+app.post('/deleteContact', isLoggedIn, function(req,res){
 	console.log('server received a delete request from client for object id - ' + req.body.id);
 
 	db.clients.remove({"_id": db.ObjectId(req.body.id)},function(err,saved){
@@ -160,7 +176,7 @@ app.post('/deleteContact', function(req,res){
 });
 
 
-app.post('/confirmForm', function(req,res){
+app.post('/confirmForm', isLoggedIn, function(req,res){
 	db.clients.save(req.body,function(err,saved){
 		if(err || !saved)
 		console.log('[ERROR] Server fail to save data in db..');
@@ -168,7 +184,7 @@ app.post('/confirmForm', function(req,res){
 	});
 });
 
-app.post('/confirmChargeForm', function(req,res, collectionName){
+app.post('/confirmChargeForm', isLoggedIn, function(req,res, collectionName){
 	db.charge.save(req.body,function(err,saved){
 		if(err || !saved)
 		console.log('[ERROR] Server fail to save data in db..');
@@ -176,7 +192,7 @@ app.post('/confirmChargeForm', function(req,res, collectionName){
 	});
 });
 
-app.post('/confirmSchemeForm', function(req,res, collectionName){
+app.post('/confirmSchemeForm', isLoggedIn, function(req,res, collectionName){
 	db.scheme.save(req.body,function(err,saved){
 		if(err || !saved)
 		console.log('[ERROR] Server fail to save data in db..');
@@ -184,7 +200,7 @@ app.post('/confirmSchemeForm', function(req,res, collectionName){
 	});
 });
 
-app.post('/confirmSchemeAssignmentForm', function(req,res, collectionName){
+app.post('/confirmSchemeAssignmentForm', isLoggedIn, function(req,res, collectionName){
 	db.scheme_assignment.save(req.body,function(err,saved){
 		if(err || !saved)
 		console.log('[ERROR] Server fail to save data in db..');
@@ -192,7 +208,7 @@ app.post('/confirmSchemeAssignmentForm', function(req,res, collectionName){
 	});
 });
 
-app.post('/getClients', function(req,res){
+app.post('/getClients', isLoggedIn, function(req,res){
 	console.log('data sent to server: ' + JSON.stringify(req.body));
 	db.clients.find(req.body,function(err,docs){
 		console.log('Retrived data from db: ' + docs.length);
@@ -200,7 +216,7 @@ app.post('/getClients', function(req,res){
 	});
 });
 
-app.post('/getCharges', function(req,res){
+app.post('/getCharges', isLoggedIn, function(req,res){
 	console.log('data sent to server: ' + JSON.stringify(req.body));
 	db.charge.find(req.body,function(err,docs){
 		console.log('Retrived data from db: ' + docs.length);
@@ -208,7 +224,7 @@ app.post('/getCharges', function(req,res){
 	});
 });
 
-app.post('/getSchemes', function(req,res){
+app.post('/getSchemes', isLoggedIn, function(req,res){
 	console.log('data sent to server: ' + JSON.stringify(req.body));
 	db.scheme.find(req.body,function(err,docs){
 		console.log('Retrived data from db: ' + docs.length);
@@ -216,7 +232,7 @@ app.post('/getSchemes', function(req,res){
 	});
 });
 
-app.post('/getCounts', function(req,res){
+app.post('/getCounts', isLoggedIn, function(req,res){
 	console.log('Fetch count based on ' + JSON.stringify(req.body));
 	db.clients.aggregate([
 		{"$group" : {
@@ -230,7 +246,7 @@ app.post('/getCounts', function(req,res){
 	);
 });
 
-app.post('/getClientsCount', function(req,res){
+app.post('/getClientsCount', isLoggedIn, function(req,res){
 	console.log('Fetch clients count based on ' + JSON.stringify(req.body));
 	db.clients.count({},function(err, result){
 		console.log('Retrived data from db: ' + JSON.stringify(result));
@@ -238,7 +254,7 @@ app.post('/getClientsCount', function(req,res){
 	});
 });
 
-app.post('/getChargesCount', function(req,res){
+app.post('/getChargesCount', isLoggedIn, function(req,res){
 	console.log('Fetch charges count based on ' + JSON.stringify(req.body));
 	db.charge.count({},function(err, result){
 		console.log('Retrived count from db: ' + JSON.stringify(result));

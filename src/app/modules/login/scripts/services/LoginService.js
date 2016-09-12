@@ -12,11 +12,10 @@
 
 	          		var isValidUser = false;
 	          	
-          			if(status === 200 && data.status){
+          			if(status === 200 && data.success){
           				isValidUser = true;	
           				user.userRole = USER_ROLES[data.role];
           			}
-	          	
 
 	          		if(isValidUser){
 	          			UserService.setLoggedInUser({name : user.userName, password : user.userPassword, role : user.userRole});
@@ -25,13 +24,13 @@
 						$state.go('home.dashboard');
 	          		}else{
 	          			$rootScope.isAnyUserLoggedIn = false;
-	          			$rootScope.$broadcast('loginFailure', {user : user.userName, reason : 'unauthorized access', errorCode : '401'});
+	          			$rootScope.$broadcast('loginFailure', {user : user.userName, reason : data.reason, errorCode : data.errorCode});
 	          		}
           		
         		}).error(function (data) {
 			      	var isValidUser = false;
 			      	$rootScope.isAnyUserLoggedIn = false;
-	          		$rootScope.$broadcast('loginFailure', {user : user.userName, reason : 'unauthorized access', errorCode : '401'});
+	          		$rootScope.$broadcast('loginFailure', {user : user.userName, reason : data.error, errorCode : data.errorCode});
 			    })
 			}
 

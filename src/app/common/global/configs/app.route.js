@@ -123,10 +123,8 @@ app.config(['$httpProvider',function ($httpProvider) {
 
 //@todo : need to explore event broadcast
 
-app.run(['$rootScope', '$state', '$cookies','$cookieStore', function($rootScope, $state, $cookies, $cookieStore){
+app.run(['$rootScope', '$state', function($rootScope, $state){
    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-    alert($cookies.passport);
-
 
    var data = toState.data || {};
 

@@ -201,7 +201,7 @@ git clone https://github.com/kangralkar/publicRepo.git
 git status
 git log
 git show commitId
-git reset
+git reset --hard ndpGithub/master
 git checkout commitHash --filename
 git commit -am "Added comments for task registration."
 $ git branch testing
