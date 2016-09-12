@@ -238,3 +238,7 @@ https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-
 https://glebbahmutov.com/blog/express-sessions/
 http://stackoverflow.com/questions/10961963/how-to-access-cookies-in-angularjs
 >>>>>>> ndp_upstream/master
+
+http://mherman.org/blog/2015/07/02/handling-user-authentication-with-the-mean-stack/#.V9Y_ufp97BQ
+
+.gitignore to tell git don't track those folder/file 
