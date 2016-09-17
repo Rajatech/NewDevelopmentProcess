@@ -31,6 +31,7 @@
     "mongoose": "^4.4.3",
     "morgan": "^1.7.0",
     "ng-grid": "^2.0.1",
+    "nodemon": "^1.10.2",
     "querystring": "^0.2.0",
     "request": "^2.75.0",
     "satellizer": "^0.15.5"
