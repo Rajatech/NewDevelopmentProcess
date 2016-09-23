@@ -31,7 +31,6 @@
 			
 		},
 		$scope.back = function () {
-			 alert('executed...');
 			 this.headerName = entryScreenName;
 			 this.OkMode = false;
 			 this.ConfirmMode = false;

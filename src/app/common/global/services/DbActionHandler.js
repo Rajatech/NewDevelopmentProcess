@@ -2,20 +2,20 @@
 
 	'use strict';
 
-	function DbActionHandler ($http,$log) {
+	function DbActionHandler ($http, $log, toastr) {
 		 
 		var actionHandler = {};
 
-		actionHandler.restUrl = 'http://localhost:8080/';
+		actionHandler.restUrl = 'http://localhost:8081';
 
 		actionHandler.post = function(entityUrl,entity){
 
 		 	$http.post(actionHandler.restUrl+entityUrl, entity)
 		 		 .success(function(data, status, header, config) {
-					$log('[Success] Saved new entity..' + JSON.stringify(data));
+					toastr.info('[Success] Saved new entity..');
 				 })
 				 .error(function(data, status, header, config) {
-					$log('[Error] Fail to save entity..' + JSON.stringify(data));
+					toastr.error('[Error] Fail to save entity..' + JSON.stringify(data));
 				 });
 		 }
 

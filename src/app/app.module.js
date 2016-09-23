@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var app = angular.module('billingApp', ['ngTouch', 'ngCookies', 'chart.js', 'ui.bootstrap', 'ui.grid', 'ui.grid.selection', 'ui.grid.exporter', 'ui.router' ,'angular-growl'])
+  var app = angular.module('billingApp', ['ngTouch', 'ngCookies', 'chart.js', 'ui.bootstrap', 'ui.grid', 'ui.grid.selection', 'ui.grid.exporter', 'ui.router' ,'angular-growl', 'toastr', 'satellizer'])
   .constant('USER_ROLES',  {
 	  all: '*',
 	  admin: 'admin',

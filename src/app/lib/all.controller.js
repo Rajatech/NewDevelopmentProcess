@@ -121,7 +121,7 @@
 
 	'use strict';
 
-	function ClientEntryController($scope, $http, growl, ClientValidator, DbActionHandler, DropdownConfig, DatepickerConfig, $timeout, $controller) {
+	function ClientEntryController($scope, $http, $log, growl, ClientValidator, DbActionHandler, DropdownConfig, DatepickerConfig, $timeout, $controller) {
 
 		var vm = this;
 		var form = {};
@@ -390,7 +390,7 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 	 
 	'use strict';
 
-	function LogInController($scope, $http, growl, $timeout, $state, $rootScope, $stateParams, LoginService, UserService){
+	function LogInController($scope, $http, growl, $log, $timeout, $state, $rootScope, $stateParams, LoginService, UserService, $auth, toastr){
 
 		var vm = this;
 		
@@ -398,24 +398,54 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 		vm.userPassword = undefined;
 		vm.userRole = undefined;
 
-		vm.loginHandler = function(){
-			console.log('inside login handler');
-			LoginService.validate({userName : vm.userName, userPassword : vm.userPassword, userRole : vm.userRole});
-			
-			$rootScope.$on('loginFailure', function(event, data){
-				alert('Could\'nt log in\n' + data.reason);
-			});
+		vm.login = function(){
+			$auth.login({email : vm.userName, password : vm.userPassword})
+    		.then(function(response) {
+    			toastr.success('Welcome in Next Generation !', 'Hi '+ response.data.user.username);
+  				$rootScope.userRole = response.data.user.role;
+  				var user = response.data.user;
+  				UserService.setLoggedInUser({name : user.username, password : null, role : user.role});
+  				$state.go('home.dashboard');
+    		})
+    		.catch(function(error) {
+      			toastr.error(error.data.message, 'Unauthorized Access!!!');
+    		});
 		};
 
-	};
 
+	    $scope.isAuthenticated = function() {
+      		return $auth.isAuthenticated();
+    	};
+	    
+	    $scope.authenticate = function(provider) {
+	      $auth.authenticate(provider)
+	        .then(function(response) {
+	          toastr.success('You have successfully logged in with ' + provider + '!', 'Hi '+ response.data.user.displayName);
+  			  $rootScope.userRole = response.data.user.role;
+  			  var user = response.data.user;
+  			  UserService.setLoggedInUser({name : user.displayName, password : null, role : user.role});
+	          $state.go('home.dashboard');
+	        })
+	        .catch(function(error) {
+	          if (error.message) {
+	          	toastr.error(error.message, 'Unauthorized Access!!!');
+	            toastr.error(error.message);
+	          } else if (error.data) {
+	            toastr.error(error.data.message, 'Unauthorized Access!!!');
+	          } else {
+	          	toastr.error('You have failed to log in!!');
+	          }
+	        });
+	    };
+
+	};
 
 	angular.module('billingApp').controller('LogInController',LogInController);
 
 
 })();;(function(){
 
-	function MenuController($state, $rootScope, $http, UserService, LoginService, $state) {
+	function MenuController($state, $rootScope, $http, UserService, LoginService, $state, $auth, toastr) {
 	
 		var vm = this;
 		vm.header = 'Menu Items';
@@ -452,13 +482,18 @@ angular.module('billingApp').controller('ModalInstanceCtrl', function ($scope, $
 		}
 		
 		vm.expireSession = function(){
-		    LoginService.logout().then(function () {
+
+		    if (!$auth.isAuthenticated()) { return; }
+		    $auth.logout()
+		      .then(function() {
+		          toastr.info('You have successfully logged out.');
 		          $state.go('login');
-		    });
+		      });
+
 		}
 
 		$rootScope.$on('unAuthorizedAccess', function(data){
-			alert('You don\'t have permission to access this.');
+			toastr.info('You don\'t have permission to access this.');
 		});
 
 	};

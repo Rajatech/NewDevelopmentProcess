@@ -242,3 +242,92 @@ http://stackoverflow.com/questions/10961963/how-to-access-cookies-in-angularjs
 http://mherman.org/blog/2015/07/02/handling-user-authentication-with-the-mean-stack/#.V9Y_ufp97BQ
 
 .gitignore to tell git don't track those folder/file 
+
+
+>>>> Satellizer -login and session management
+>>>> Need to build angular testing skill
+>>>> node project code genrator
+
+
+
+
+window.fbAsyncInit = function() {
+	       FB.init({
+	         appId      : '173208663114114',
+	         xfbml      : true,
+	         version    : 'v2.7'
+	       });
+     	};
+
+	    (function(d, s, h, id){
+	        var js, fjs = d.getElementsByTagName(s)[0];
+	        if (d.getElementById(id)) {return;}
+	        js = d.createElement(s); js.id = id;
+	        js.src = "//connect.facebook.net/en_US/sdk.js";
+	        fjs.parentNode.insertBefore(js, fjs);
+	    }(document, 'script', 'facebook-jssdk'));
+
+
+
+service.testAPI = function(response) {
+			    console.log('Welcome!  Fetching your information.... ' + JSON.stringify(response));
+			    FB.api('/me', function(response) {
+			      console.log('Successful login for in /me: ' + JSON.stringify(response));
+			    });
+
+		 		$http.post('/fb-login',{name : 'xyz', password : '123'})
+				.success(function(data,status){
+
+	          		var isValidUser = false;
+	          	
+          			if(status === 200 && data.success){
+          				isValidUser = true;	
+          			}
+
+	          		if(isValidUser){
+	          			UserService.setLoggedInUser({name : 'xyz', password : '123', role : 'normaluser'});
+						$rootScope.isAnyUserLoggedIn = true;
+						$rootScope.userRole = 'normaluser';
+						$state.go('home.dashboard');
+	          		}else{
+	          			$rootScope.isAnyUserLoggedIn = false;
+	          			$rootScope.$broadcast('loginFailure', {user : 'xyz', reason : data.reason, errorCode : data.errorCode});
+	          		}
+          		
+        		}).error(function (data) {
+			      	var isValidUser = false;
+			      	$rootScope.isAnyUserLoggedIn = false;
+	          		$rootScope.$broadcast('loginFailure', {user : 'xyz', reason : data.error, errorCode : data.errorCode});
+			    })
+	  		}
+
+	  		service.statusChangeCallback = function (response) {
+			    if (response.status === 'connected') {
+			      $log.info('Already logged in facebook..');
+			      service.testAPI(response);
+			    } else {
+			      	FB.login(function(response) {
+					    if (response.authResponse) {
+						     console.log('Welcome!  Fetching your information.... ');
+						     FB.api('/me', function(response) {
+						       console.log('Good to see you, ' + JSON.stringify(response));
+						     });
+						     UserService.setLoggedInUser({name : 'xyz', password : '123', role : 'normaluser'});
+							 $rootScope.isAnyUserLoggedIn = true;
+							 $rootScope.userRole = 'normaluser'
+							 $state.go('home.dashboard');
+					    } else {
+					     	console.log('User cancelled login or did not fully authorize.');
+					    }
+					}, {scope: 'email,user_likes'});
+			    }
+	  		}
+
+			service.logInViaFB = function(){
+
+				$log.info('in loginWithFacebook handler..');
+				FB.getLoginStatus(function(response) {
+	      			service.statusChangeCallback(response);
+	    		});
+			}
+	    

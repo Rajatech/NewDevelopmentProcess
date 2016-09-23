@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	function LoginService ($http, $q, UserService, USER_ROLES, $rootScope,$state) {
+	function LoginService ($http, $q, UserService, USER_ROLES, $rootScope, $state, $log) {
 			
 			var service = {};
 			service. validate = {};

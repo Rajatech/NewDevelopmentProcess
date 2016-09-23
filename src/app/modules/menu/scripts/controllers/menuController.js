@@ -1,6 +1,6 @@
 (function(){
 
-	function MenuController($state, $rootScope, $http, UserService, LoginService, $state) {
+	function MenuController($state, $rootScope, $http, UserService, LoginService, $state, $auth, toastr) {
 	
 		var vm = this;
 		vm.header = 'Menu Items';
@@ -37,13 +37,18 @@
 		}
 		
 		vm.expireSession = function(){
-		    LoginService.logout().then(function () {
+
+		    if (!$auth.isAuthenticated()) { return; }
+		    $auth.logout()
+		      .then(function() {
+		          toastr.info('You have successfully logged out.');
 		          $state.go('login');
-		    });
+		      });
+
 		}
 
 		$rootScope.$on('unAuthorizedAccess', function(data){
-			alert('You don\'t have permission to access this.');
+			toastr.info('You don\'t have permission to access this.');
 		});
 
 	};

@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	function ClientEntryController($scope, $http, growl, ClientValidator, DbActionHandler, DropdownConfig, DatepickerConfig, $timeout, $controller) {
+	function ClientEntryController($scope, $http, $log, growl, ClientValidator, DbActionHandler, DropdownConfig, DatepickerConfig, $timeout, $controller) {
 
 		var vm = this;
 		var form = {};

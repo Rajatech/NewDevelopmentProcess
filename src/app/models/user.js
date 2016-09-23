@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-//var bcrypt = require('bcryptjs');
+mongoose.connect('mongodb://localhost/mongoapp');
+var bcrypt = require('bcryptjs');
 
 // User Schema
 var UserSchema = mongoose.Schema({
@@ -17,6 +18,18 @@ var UserSchema = mongoose.Schema({
 		type: String
 	},
 	role: {
+		type: String
+	},
+	provider: {
+		type: String
+	},
+	profileId: {
+		type: String
+	},
+	displayName: {
+		type: String
+	},
+	picture: {
 		type: String
 	}
 }, {collection : 'user'});
@@ -45,15 +58,15 @@ module.exports.getUserById = function(id, callback){
 	User.findById(id, callback);
 }
 
-module.exports.comparePassword = function(candidatePassword, hash, callback){
-	var isMatch = false;
-	if(candidatePassword === hash){
-		isMatch = true;
-	}
-    callback(null, isMatch);
+module.exports.comparePassword = function(newPassword, oldPassword, done) {
 
-	/*bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-    	if(err) throw err;
-    	callback(null, isMatch);
+	if(newPassword === oldPassword){
+		done(null, true);
+	}else{
+		done('Invalid Password', false);
+	}
+
+	/*bcrypt.compare(newPassword, oldPassword, function(err, isMatch) {
+	    done(err, true);
 	});*/
-}
+};

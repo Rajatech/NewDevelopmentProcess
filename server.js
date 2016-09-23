@@ -4,260 +4,39 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
-var expressValidator = require('express-validator');
 var session = require('express-session');
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
 var morgan = require('morgan');
-var mongojs = require('mongojs');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var querystring = require('querystring');
 var http = require('http');
-var flash = require('connect-flash');
 
 //app initialization
 var app = express();
-var properties = require('./application-properties.js');
-var db = mongojs('mongoapp',['clients','charge','scheme','scheme_assignment']);
-mongoose.connect(properties.dbUrl);
-
-//boduParser and cookieParse middleware
+var properties = require('./server/common/config/application-properties.js');
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: false })); 
-app.use(cookieParser('12345'));
+app.use(cookieParser());
 app.use(flash());
-
-//set static resources
-/*app.use(express.static(__dirname + '/src/app/modules/client'));*/
 app.use(express.static(__dirname + '/src/app'));
 app.use(morgan('dev')); 
 
-// Express Session
 var sessionOpts = {
-  saveUninitialized: true, // saved new sessions
-  resave: false, // do not automatically write to the session store
+  cookie : { httpOnly: true, maxAge: 2419200000 },
+  saveUninitialized: true, 
+  resave: false, 
   secret: '12345',
-  cookie : { httpOnly: true, maxAge: 2419200000 } // configure when sessions expires
 }
 app.use(session(sessionOpts));
 
-//models
-var User = require(__dirname + '/src/app' + '/models/user');
-// Passport init
-app.use(passport.initialize());
-app.use(passport.session());
 
-
+//start the server
 app.listen(properties.serverPort, function(){
-	console.log('Express Server running at ' + properties.serverPort + ' port..');	
+	console.log('Server running at ' + properties.serverPort + ' port..');	
 });
 
-//login and authentication using passport
-
-passport.use('login',new LocalStrategy(
-	{
- 	 passReqToCallback : true
-	},
-    function(req, username, password, done) {
-	   
-	   console.log('Inside Passport Local strategy..\nStarting login authentication process for user '+ username);
-
-	   User.getUserByUsername(username, function(err, user){
-	   	
-	   		if(err) throw err;
-		   	
-		   	if(!user){
-		   		return done(null, false, req.flash('message', 'User Not found.'));
-		   	}
-
-		   	User.comparePassword(password, user.password, function(err, isMatch){
-		   		if(err) throw err;
-		   		if(isMatch){
-		   			return done(null, user);
-		   		} else {
-		   			return done(null, false, req.flash('message', 'Invalid password'));
-		   		}
-		   	});
-
-	   });
-  }));
-
-passport.serializeUser(function(user, done) {
-  console.log(user.id);
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.getUserById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-
-app.post('/login', function(req, res, next) {
-  passport.authenticate('login', function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
-
-    if (!user) {
-      return res.status(401).json({
-        success : false,
-        error : 'Unauthorised access',
-        errorCode : '401'
-      });
-    }
-
-    req.logIn(user, function(err) {
-      if (err) {
-        return res.status(500).json({
-          success : false,
-          error : 'Internal error',
-          errorCode : '500'
-        });
-      }
-      res.status(200).json({
-      	success: true,
-        info: 'Login successful!',
-        role: user.role
-      });
-    });
-
-  })(req, res, next);
-  });
-
-app.get('/logout', isLoggedIn, function(req, res){
-	
-	console.log('IN NODE SERVER : LOGOUT'+ JSON.stringify(req.user));
-	req.logout();
-
-	res.status(200).json({
-    	status: 'Bye!'
-  	});
-});
-function isLoggedIn(req, res, next){
-
-	if(req.isAuthenticated()){
-		next();
-	}
-	res.redirect('/');
-
-}
-app.get('/sendSession', isLoggedIn, function(req,res){
-	res.json(req.user).end();
-});
-
-//request handler
-app.get('/getclients', isLoggedIn, function(req,res){
-	console.log('server received a get request from client..');
-	db.clients.find(function(err,docs){
-		console.log('Retrived data from db: ' + docs);
-		res.json(docs);
-	});
-});
-
-app.post('/saveNewContact', isLoggedIn, function(req,res){
-	console.log('server received a get request from client to save new contact..');
-	db.clients.save(req.body,function(err,saved){
-		if(err || !saved)
-		console.log('[ERROR] Server fail to save data in db..');
-		console.log('New contact saved..');
-	});
-});
-
-app.post('/deleteContact', isLoggedIn, function(req,res){
-	console.log('server received a delete request from client for object id - ' + req.body.id);
-
-	db.clients.remove({"_id": db.ObjectId(req.body.id)},function(err,saved){
-		if(err || !saved)
-		console.log('[ERROR] Server fail to delete data from db..');
-	});
-});
-
-
-app.post('/confirmForm', isLoggedIn, function(req,res){
-	db.clients.save(req.body,function(err,saved){
-		if(err || !saved)
-		console.log('[ERROR] Server fail to save data in db..');
-		console.log('New client entity saved..');
-	});
-});
-
-app.post('/confirmChargeForm', isLoggedIn, function(req,res, collectionName){
-	db.charge.save(req.body,function(err,saved){
-		if(err || !saved)
-		console.log('[ERROR] Server fail to save data in db..');
-		console.log('New charge entity saved..');
-	});
-});
-
-app.post('/confirmSchemeForm', isLoggedIn, function(req,res, collectionName){
-	db.scheme.save(req.body,function(err,saved){
-		if(err || !saved)
-		console.log('[ERROR] Server fail to save data in db..');
-		console.log('New Scheme entity saved..');
-	});
-});
-
-app.post('/confirmSchemeAssignmentForm', isLoggedIn, function(req,res, collectionName){
-	db.scheme_assignment.save(req.body,function(err,saved){
-		if(err || !saved)
-		console.log('[ERROR] Server fail to save data in db..');
-		console.log('New Scheme Assignment entity saved..');
-	});
-});
-
-app.post('/getClients', isLoggedIn, function(req,res){
-	console.log('data sent to server: ' + JSON.stringify(req.body));
-	db.clients.find(req.body,function(err,docs){
-		console.log('Retrived data from db: ' + docs.length);
-		res.json(docs);
-	});
-});
-
-app.post('/getCharges', isLoggedIn, function(req,res){
-	console.log('data sent to server: ' + JSON.stringify(req.body));
-	db.charge.find(req.body,function(err,docs){
-		console.log('Retrived data from db: ' + docs.length);
-		res.json(docs);
-	});
-});
-
-app.post('/getSchemes', isLoggedIn, function(req,res){
-	console.log('data sent to server: ' + JSON.stringify(req.body));
-	db.scheme.find(req.body,function(err,docs){
-		console.log('Retrived data from db: ' + docs.length);
-		res.json(docs);
-	});
-});
-
-app.post('/getCounts', isLoggedIn, function(req,res){
-	console.log('Fetch count based on ' + JSON.stringify(req.body));
-	db.clients.aggregate([
-		{"$group" : {
-			_id: {clientType : "$clientType"},
-			count: {$sum : 1}
-		}},
-		{$sort : {"count" :-1}}],function(err, result){
-			console.log('Retrived data from db: ' + JSON.stringify(result.length));
-			res.json(result);
-		}
-	);
-});
-
-app.post('/getClientsCount', isLoggedIn, function(req,res){
-	console.log('Fetch clients count based on ' + JSON.stringify(req.body));
-	db.clients.count({},function(err, result){
-		console.log('Retrived data from db: ' + JSON.stringify(result));
-		res.json(result);
-	});
-});
-
-app.post('/getChargesCount', isLoggedIn, function(req,res){
-	console.log('Fetch charges count based on ' + JSON.stringify(req.body));
-	db.charge.count({},function(err, result){
-		console.log('Retrived count from db: ' + JSON.stringify(result));
-		res.json(result);
-	});
-});
+//modularization of routing in express 4
+var facebookRoute = require('./server/oAuth/facebook/oAuthFbRoute.js');
+var loginRoute = require('./server/login/loginRoute.js');
+var apiRoutes = require('./server/restEndPoints/routes/api.endPoints.route.js');
+app.use('/', facebookRoute);
+app.use('/', loginRoute);
+app.use('/', apiRoutes);

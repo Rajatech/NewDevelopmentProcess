@@ -46,12 +46,19 @@ grunt.initConfig({
             'src/app/lib/billingApp/all.factory.min.js': ['src/app/modules/**/*Factory.js'],
           }
         }
-  }
+  },
+  watch: {
+    src: {
+      files: ['src/app/modules/**/*Controller.js'],
+      tasks: ['default'],
+    }
+  },
 
 });
 
 grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-contrib-uglify');
+grunt.loadNpmTasks('grunt-contrib-watch');
 /*
  Task registration goes here
   You can register multiple task here one by one

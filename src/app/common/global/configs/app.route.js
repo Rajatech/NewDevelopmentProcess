@@ -6,6 +6,30 @@ app.config(['$httpProvider',function ($httpProvider) {
  }])
 .config(
   function($stateProvider, $urlRouterProvider, growlProvider, USER_ROLES) {
+
+     /**
+     * Helper auth functions
+     */
+    var skipIfLoggedIn = function($q, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.reject();
+      } else {
+        deferred.resolve();
+      }
+      return deferred.promise;
+    };
+
+    var loginRequired = function($q, $location, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.resolve();
+      } else {
+        $location.path('/');
+      }
+      return deferred.promise;
+    };
+
     $urlRouterProvider.otherwise('/');
     $stateProvider.
     state('login', {
@@ -19,6 +43,9 @@ app.config(['$httpProvider',function ($httpProvider) {
           controller: 'LogInController',
           controllerAs: 'login'
         }
+      },
+      resolve: {
+        skipIfLoggedIn: skipIfLoggedIn
       }
     }).
     state('home',{
@@ -32,8 +59,8 @@ app.config(['$httpProvider',function ($httpProvider) {
             controllerAs: 'menu'
           }
       },
-      data: {
-        requireLogin: true
+      resolve: {
+          loginRequired: loginRequired
       }
       
     }).
@@ -123,20 +150,9 @@ app.config(['$httpProvider',function ($httpProvider) {
 
 //@todo : need to explore event broadcast
 
-app.run(['$rootScope', '$state', function($rootScope, $state){
+app.run(['$rootScope', '$state', '$auth', function($rootScope, $state, $auth){
    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
-   var data = toState.data || {};
-
-    var requireLogin = data.requireLogin || false;
-
-    if (requireLogin && !$rootScope.isAnyUserLoggedIn) {
-      event.preventDefault();
-      //@todo: later form here a login popup will be open for instant login
-      $state.go('login');
-    }
-
-    
     if(angular.isDefined(toState.accessRole)){
       var isAccessible = false;
       angular.forEach(toState.accessRole.role, function(value,key){
